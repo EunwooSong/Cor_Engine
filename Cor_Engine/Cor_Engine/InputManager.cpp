@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "InputManager.h"
-#include "Zero_System.h"
+#include "ZeroSystem.h"
+#include <WinUser.h>
 
 void InputManager::Update()
 {
@@ -9,6 +10,6 @@ void InputManager::Update()
         currentKeys[i] = ::GetKeyState(i) & 0x8000;
     }
 
-    GetCursorPos(&cursorPos);
-    ScreenToClient(ZERO_ENGINE->GetHWND(), &cursorPos);
+    ::GetCursorPos(&cursorPos);
+    ScreenToClient(ZERO_WINDOWS->GetHWND(), &cursorPos);
 }

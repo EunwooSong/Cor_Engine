@@ -2,6 +2,7 @@
 
 #include "ECS_Type.h"
 #include "Component.h"
+#include <iostream>
 #include <array>
 #include <cassert>
 #include <unordered_map>
@@ -50,7 +51,7 @@ public:
     T* GetComponent(EntityID _id) {
         //assert(m_EntityToIndexMap.find(_id) != m_EntityToIndexMap.end() && "Retrieving non-existent component");
         if (m_EntityToIndexMap.find(_id) == m_EntityToIndexMap.end()) {
-            CLogger::Error("Retrieving non-existent component");
+            std::cout << "Retrieving non-existent component" << std::endl;
             return nullptr;
         }
 

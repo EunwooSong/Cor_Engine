@@ -1,4 +1,4 @@
-#include "DirectXCORE.h"
+#include "DirectXCore.h"
 #include "stdafx.h"
 
 void DirectXCore::Initialize(HWND hWnd) {

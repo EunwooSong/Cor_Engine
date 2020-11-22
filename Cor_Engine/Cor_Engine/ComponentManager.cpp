@@ -3,9 +3,6 @@
 #include "GameObject.h"
 #include "ComponentManager.h"
 
-ComponentManager::~ComponentManager()
-{
-}
 void ComponentManager::Start()
 {
     for (auto const& pair : m_ComponentArrays) {

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Entity.h"
 #include "Component.h"
-#include "ZERO_System.h"
+#include "ZeroSystem.h"
 
 Entity::Entity() : m_id(-1), m_Scene(nullptr), isDestroy(false), isActive(true)
 {

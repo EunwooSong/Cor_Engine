@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\ZeroEngine\SystemFunc">
       <UniqueIdentifier>{d49f1049-fa03-44aa-853c-107b7aa2e195}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ZeroEngine\CoreComponents">
+      <UniqueIdentifier>{260e262c-d998-4c5b-a4c7-fb550752a42e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXCore.h">
@@ -78,6 +81,33 @@
     <ClInclude Include="ZeroStruct.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ColliderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXTextureManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite2DRenderer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimation.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -121,6 +151,30 @@
     </ClCompile>
     <ClCompile Include="ZeroSystem.cpp">
       <Filter>소스 파일\ZeroEngine\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXTextureManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite2DRenderer.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody2D.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimation.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

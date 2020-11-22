@@ -9,7 +9,7 @@ class GameObject :
     public Entity
 {
 public:
-    GameObject() {}
+    GameObject() : transform(nullptr) {}
     ~GameObject() {}
 
     virtual void Init() override;
@@ -18,7 +18,7 @@ public:
     T* AddComponent() {
         T* compo = new T();
         m_Scene->AddComponent<T>(this, compo);
-        m_components.push_back(dynamic_cast<Component>(compo));
+        m_components.push_back(dynamic_cast<Component*>(compo));
 
         return compo;
     }
@@ -28,7 +28,6 @@ public:
         return m_Scene->GetComponent<T>(GetEntityID());
     }
 
-public:
     Transform* transform;
 };
 

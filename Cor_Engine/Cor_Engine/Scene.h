@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "EntityIDManager.h"
 #include "ComponentManager.h"
+#include "ColliderManager.h"
 
 class Scene {
 public:
@@ -85,5 +86,4 @@ private:
     std::unique_ptr<ComponentManager> m_ComponentManager;
     std::unique_ptr<EntityIDManager> m_EntityIDManager;
     std::unique_ptr<ColliderManager> m_ColliderManager;
-    //        std::unique_ptr
 };

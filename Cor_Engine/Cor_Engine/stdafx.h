@@ -1,5 +1,10 @@
 #pragma once
 
+#pragma warning (disable : 4996)
+#pragma warning (disable : 4244)
+#pragma warning (disable : 4305)
+#pragma warning (disable : 4309)
+
 #include <algorithm>
 #include <cstdarg>
 #include <cstdio>
@@ -19,7 +24,10 @@
 
 #include <d3dx9.h>
 #include <d3d9.h>
+#include <d3dx9math.h>
 #include <Windows.h>
+
+#include "ZeroMath.h"
 
 //DELETE Macro
 #define SAFE_DELETE(p)     \
@@ -45,5 +53,3 @@
             (p) = nullptr;  \
         }                   \
     }
-
-using Vec2 = D3DXVECTOR2;

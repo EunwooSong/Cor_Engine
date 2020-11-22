@@ -16,12 +16,12 @@ void Scene::Init() {
     m_ColliderManager = std::make_unique<ColliderManager>();
 
     //Register Component(Transform, RigidBody, 2D Renderer, Collider . . .)
-    RegisterComponent<Transform>();
+    /*RegisterComponent<Transform>();
     RegisterComponent<CameraComponent>();
     RegisterComponent<RigidBody2D>();
     RegisterComponent<Sprite2DRenderer>();
     RegisterComponent<BoxCollider>();
-    RegisterComponent<Button>();
+    RegisterComponent<Button>();*/
 }
 void Scene::Start() {
     m_ComponentManager->Start();

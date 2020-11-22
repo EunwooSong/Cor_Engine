@@ -4,6 +4,7 @@
 class Collision;
 class GameObject;
 class Entity;
+class BoxCollider;
 
 class Component {
 public:
@@ -15,17 +16,17 @@ public:
     virtual void Render() {}
     virtual void EndScene() {}
 
-    void Destroy() { isDestroy = true; }
-    static void Destroy(Component* compo) { compo->Destroy(); }
-    bool GetIsDestroy() const { return isDestroy; }
+    void Destroy()                          { isDestroy = true; }
+    static void Destroy(Component* compo)   { compo->Destroy(); }
+    bool GetIsDestroy() const               { return isDestroy; }
 
-    void SetActive(bool isActive) { this->isActive = isActive; }
-    bool GetActive() const { return isActive; }
+    void SetActive(bool isActive)           { this->isActive = isActive; }
+    bool GetActive() const                  { return isActive; }
 
     GameObject* GetOwner();
-    void SetOwner(Entity* owner) { m_Owner = owner; }
+    void SetOwner(Entity* owner)            { m_Owner = owner; }
 
-    bool GetIsStarted() { return isStarted; }
+    bool GetIsStarted()                     { return isStarted; }
 
 protected:
     Entity* m_Owner;
@@ -35,10 +36,10 @@ protected:
 
     //Component Listeners
 public:
-    virtual void OnCollisionEnter(Collision* coll) {};
-    virtual void OnCollisionStay(Collision* coll) {};
-    virtual void OnCollisionExit(Collision* coll) {};
-    virtual void OnTriggerEnter(Collision* coll) {};
-    virtual void OnTriggerStay(Collision* coll) {};
-    virtual void OnTriggerExit(Collision* coll) {};
+    virtual void OnCollisionEnter(BoxCollider* coll) {};
+    virtual void OnCollisionStay(BoxCollider* coll) {};
+    virtual void OnCollisionExit(BoxCollider* coll) {};
+    virtual void OnTriggerEnter(BoxCollider* coll) {};
+    virtual void OnTriggerStay(BoxCollider* coll) {};
+    virtual void OnTriggerExit(BoxCollider* coll) {};
 };

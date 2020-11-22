@@ -5,6 +5,8 @@
 #define KEY_UP      1
 #define KEY_STAY    2
 
+#include <Windows.h>
+
 class InputManager {
 public:
     InputManager() {

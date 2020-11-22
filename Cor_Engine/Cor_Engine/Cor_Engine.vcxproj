@@ -24,6 +24,7 @@
     <ProjectGuid>{7b367e8a-eeb5-4936-a274-a2dd87155d95}</ProjectGuid>
     <RootNamespace>CorEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <ProjectName>ZeroEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,7 +129,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -155,12 +156,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationController.h" />
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="ColliderManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="DirectXTextureManager.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="RigidBody2D.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Sprite2DRenderer.h" />
+    <ClInclude Include="SpriteAnimation.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="ZeroMath.h" />
     <ClInclude Include="ZeroStruct.h" />
     <ClInclude Include="ZeroSystem.h" />
     <ClInclude Include="DirectXCore.h" />
@@ -173,12 +183,20 @@
     <ClInclude Include="WindowsApplication.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationController.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="ColliderManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentArray.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="DirectXTextureManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="RigidBody2D.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Sprite2DRenderer.cpp" />
+    <ClCompile Include="SpriteAnimation.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="ZeroSystem.cpp" />
     <ClCompile Include="DirectXCore.cpp" />
     <ClCompile Include="Entity.cpp" />

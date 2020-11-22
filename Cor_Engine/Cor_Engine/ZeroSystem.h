@@ -3,30 +3,35 @@
 #include "DirectXCore.h"
 #include "WindowsApplication.h"
 #include "SceneManager.h"
+#include "TimeManager.h"
+#include "InputManager.h"
+#include "DirectXTextureManager.h"
 
-#define ZERO_ENGINE        SharkSystem::Instance()
+
+#define ZERO_ENGINE        ZeroSystem::Instance()
 #define ZERO_DIRECT3D      DIRECTX_CORE
 #define ZERO_WINDOWS       WINDOWS_APPLICATION
 
-#define ZERO_TIME_MGR      ZERO_ENGINE->SharkSystem::GetTimeManager()
-#define ZERO_SCENE_MGR     ZERO_ENGINE->SharkSystem::GetSceneManager()
-#define ZERO_INPUT_MGR     ZERO_ENGINE->SharkSystem::GetInputManager()
-#define ZERO_TEXTURE_MGR   ZERO_ENGINE->SharkSystem::GetTextureManager()
-#define ZERO_LINE_MGR      ZERO_ENGINE->SharkSystem::GetLineDebuggerManager()
+#define ZERO_TIME_MGR      ZERO_ENGINE->GetTimeManager()
+#define ZERO_SCENE_MGR     ZERO_ENGINE->GetSceneManager()
+#define ZERO_INPUT_MGR     ZERO_ENGINE->GetInputManager()
+#define ZERO_TEXTURE_MGR   ZERO_ENGINE->GetTextureManager()
 
 class ZeroSystem {
 public:
-    static std::unique_ptr<ZeroSystem> instance;
-    static std::once_flag onlyOnce;
+   /* static std::unique_ptr<ZeroSystem> instance;
+    static std::once_flag onlyOnce;*/
 
     ZeroSystem() = default;
 
     ~ZeroSystem() = default;
 
     static ZeroSystem* Instance() {
-        std::call_once(onlyOnce, []() { instance.reset(new ZeroSystem()); });
+        /*std::call_once(onlyOnce, []() { instance.reset(new ZeroSystem()); });
+        return instance.get();*/
 
-        return instance.get();
+        static ZeroSystem* iter = new ZeroSystem();
+        return iter;
     };
 
     void InitializeEngine(std::string appName, int width, int height, bool isFullScreen) {
@@ -39,9 +44,8 @@ public:
 
         sceneMgr = new SceneManager();
         timeMgr = new TimeManager();
-        textureMgr = new DirectXTextureManger();
+        textureMgr = new DirectXTextureManager();
         inputMgr = new InputManager();
-        lineMgr = new LineDebuggerManager();
 
         //Initialize Managers
         timeMgr->Init();
@@ -66,10 +70,6 @@ public:
         sceneMgr->Render();
         ZERO_DIRECT3D->GetSprite()->End();
 
-        ZERO_DIRECT3D->GetLine()->Begin();
-        lineMgr->Render();
-        ZERO_DIRECT3D->GetLine()->End();
-
         ZERO_DIRECT3D->EndRender();
     }
 
@@ -82,23 +82,19 @@ public:
         SAFE_DELETE(timeMgr);
         SAFE_DELETE(textureMgr);
         SAFE_DELETE(inputMgr);
-        SAFE_DELETE(lineMgr);
 
         ZERO_DIRECT3D->Release();
     }
 
     bool IsClosed() const { return ZERO_WINDOWS->CheckMessage().message == WM_QUIT; }
 
-    SceneManager* GetSceneManager() { return sceneMgr; };
-    TimeManager* GetTimeManager() { return timeMgr; };
-    InputManager* GetInputManager() { return inputMgr; };
-    DirectXTextureManger* GetTextureManager() { return textureMgr; };
-    LineDebuggerManager* GetLineDebuggerManager() { return lineMgr; }
+    SceneManager* GetSceneManager()                 { return sceneMgr; }
+    TimeManager* GetTimeManager()                   { return timeMgr; }
+    InputManager* GetInputManager()                 { return inputMgr; }
+    DirectXTextureManager* GetTextureManager()       { return textureMgr; }
 public:
     SceneManager* sceneMgr;
     TimeManager* timeMgr;
     InputManager* inputMgr;
-    DirectXTextureManger* textureMgr;
-    LineDebuggerManager* lineMgr;
-
+    DirectXTextureManager* textureMgr;
 };
