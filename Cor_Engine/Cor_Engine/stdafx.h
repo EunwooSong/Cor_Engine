@@ -61,7 +61,3 @@
 #define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
 #endif // DEBUG || _DEBUG
-
-//namespace GlobalPreferences {
-//    char[] APPLICATION_NAME = "ZERO_ENGINE";
-//}
