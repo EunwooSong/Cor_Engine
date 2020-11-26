@@ -4,6 +4,14 @@
 std::unique_ptr<ZeroSystem> ZeroSystem::instance;
 std::once_flag ZeroSystem::onlyOnce;
 
+ZeroSystem::ZeroSystem()
+	: isDebug(false)
+{
+#if defined(DEBUG) | defined(_DEBUG)
+	isDebug = true;
+#endif
+}
+
 ZeroSystem::~ZeroSystem()
 {
 }
@@ -108,4 +116,9 @@ int ZeroSystem::MainLoop()
 #endif // defined(DEBUG)
 
 	return 0;
+}
+
+bool ZeroSystem::GetIsDebug()
+{
+	return isDebug;
 }

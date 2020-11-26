@@ -22,7 +22,7 @@ public:
     static std::unique_ptr<ZeroSystem> instance;
     static std::once_flag onlyOnce;
 
-    ZeroSystem() = default;
+    ZeroSystem();
     ~ZeroSystem();
 
     static ZeroSystem* Instance();
@@ -47,9 +47,12 @@ public:
     TimeManager* GetTimeManager()                   { return timeMgr; }
     InputManager* GetInputManager()                 { return inputMgr; }
     DirectXTextureManager* GetTextureManager()       { return textureMgr; }
+    bool GetIsDebug();
+
 public:
     SceneManager* sceneMgr;
     TimeManager* timeMgr;
     InputManager* inputMgr;
     DirectXTextureManager* textureMgr;
+    bool isDebug;
 };

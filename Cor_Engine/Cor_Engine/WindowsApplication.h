@@ -32,6 +32,7 @@ public:
     HWND GetHWND() { return hWnd; }
     void SetHWND(HWND hwnd) { this->hWnd = hwnd; }
     HINSTANCE GetHINSTANCE() { return hInstance; }
+    std::string GetAppName() { return appName; }
 
 private:
     HWND hWnd;
