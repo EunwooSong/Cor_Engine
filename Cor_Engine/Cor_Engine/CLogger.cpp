@@ -174,10 +174,10 @@ void CLogger::ErrorWithDialog(const char* mes, ...) {
 #if defined(_WIN32) || defined(_WIN64)
     wchar_t application_name[128] = L"", content[4096] = L"";
     size_t application_name_size, content_size;
-    mbstowcs_s(&application_name_size, application_name, 128, GlobalPreferences::APPLICATION_NAME, 128);
+    mbstowcs_s(&application_name_size, application_name, 128, ZERO_WINDOWS->GetAppName().c_str(), 128);
     mbstowcs_s(&content_size, content, 4096, mes, 4096);
-    MessageBox(NULL, reinterpret_cast<LPCSTR>(LPCWSTR(content)),
-        reinterpret_cast<LPCSTR>(LPCWSTR(application_name)), MB_OK);
+    MessageBox(NULL, content,
+        application_name, MB_OK);
 #else
     CLogger::Debug("CLogger::Error - ErrorStackDialogue is avaliable only in WINDOWS");
 #endif
