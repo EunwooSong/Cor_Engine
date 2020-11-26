@@ -5,7 +5,7 @@ class Scene;
 class SceneManager {
 public:
     SceneManager() : currentScene(nullptr), nextScene(nullptr) {};
-    ~SceneManager() {};
+    ~SceneManager();
 
     Scene* GetCurrentScene();
 

@@ -29,17 +29,18 @@ public:
     Transform* GetParent() { return parent; }
     const D3DXMATRIX& GetMatrix() { return mat; }
 
-    void SetParent(Transform* iter) { parent = iter; };
-    void SetLocalPos(Vec2 localPos) { this->localPos = localPos; };
-    void SetRotation(float z) { this->rotation = z; }
-    void SetRotationCenter(Vec2 rc) { rotationCenter = rc; }
-    void SetScale(Vec2 scale) { this->scale = scale; }
-    void SetScaleCenter(Vec2 sc) { scaleCenter = sc; }
+    void SetParent(Transform* iter)     { parent = iter; };
+    void SetLocalPos(Vec2 localPos)     { this->localPos = localPos; };
+    void SetRotation(float z)           { this->rotation = z; }
+    void SetRotationCenter(Vec2 rc)     { rotationCenter = rc; }
+    void SetScale(Vec2 scale)           { this->scale = scale; }
+    void SetScaleCenter(Vec2 sc)        { scaleCenter = sc; }
+    void SetIsUiObject(bool isUiObject) { this->isUiObject = isUiObject; }
     
     void Translate(Vec2 pos) { localPos += pos; }
     void AddChild(Transform* iter);
     void PopChild(Transform* iter);
-    void MulMatrix(D3DXMATRIX mat) { this->mat *= mat; }
+    void MulMatrix(D3DXMATRIX mat) { if(!isUiObject) this->mat *= mat; }
 
 private:
     //Position, Direction, Angles, Quaternion, scale, matrix
@@ -50,6 +51,8 @@ private:
     Vec2 rotationCenter;
     float rotation;
     D3DXMATRIX mat;
+
+    bool isUiObject;
 
     Transform* parent;
     std::vector<Transform*> children;

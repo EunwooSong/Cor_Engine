@@ -3,7 +3,14 @@
 class Sprite2DRenderer
     : public Component {
 public:
-    Sprite2DRenderer() {}
+    Sprite2DRenderer() :
+        texture(nullptr),
+        color(1,1,1,1),
+        visibleRect(0,0,0,0),
+        width(0),
+        height(0),
+        isVisible(true){}
+
     Sprite2DRenderer(const char* path);
     Sprite2DRenderer(std::string path);
     ~Sprite2DRenderer() {}
@@ -29,4 +36,5 @@ protected:
     Rect visibleRect;
     int width;
     int height;
+    bool isVisible;
 };

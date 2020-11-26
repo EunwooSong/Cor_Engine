@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "AnimationController.h"
+#include "GameObject.h"
+#include "Sprite2DRenderer.h"
 
 AnimationController::AnimationController()
 {
@@ -7,27 +9,89 @@ AnimationController::AnimationController()
 
 AnimationController::~AnimationController()
 {
+	for (auto iter : anim_node) {
+		AnimationNode* node = iter.second;
+
+		for (auto gIter : node->stateGroup)
+			SAFE_DELETE(gIter.second);
+
+		SAFE_DELETE(node->currentAnim);
+		SAFE_DELETE(node);
+	}
 }
 
 void AnimationController::Start()
 {
+	Component::Start();
+	current_node = entry_node;
 }
 
 void AnimationController::Update()
 {
+	Component::Update();
+	current_node->second->currentAnim->Update();
+}
+
+void AnimationController::LateUpdate()
+{
+	Component::LateUpdate();
+	CheckAnimationState();
 }
 
 void AnimationController::Render()
 {
-}
-
-void AnimationController::EndScene()
-{
+	Component::Render();
+	GetOwner()->GetComponent<Sprite2DRenderer>()->SetTexture(current_node->second->currentAnim->GetCurrentFrameTexture());
 }
 
 void AnimationController::CheckAnimationState()
 {
-	
+	AnimationNode* node = current_node->second;
+
+	if (!node->stateGroup.empty()) {
+		for (std::pair<std::string, StateGroup*> iter : node->stateGroup) {
+			std::string nextAnim = iter.first;
+			StateGroup* group = iter.second;
+
+			bool isCanChange = !group->isHasExitTime;
+			if(!isCanChange) isCanChange = node->currentAnim->GetIsAnimationEnd();
+
+			if (isCanChange) {
+				bool skipThisNode = false;
+
+				//Check state type int
+				for (StateNode<int> state_int : group->stateType_int) {
+					if (!state_int.CheckOperater(GetParameterInt(state_int.paramName))) {
+						skipThisNode = true;
+						break;
+					}
+				}
+				if (skipThisNode) continue;
+
+				//Check state type float
+				for (StateNode<float> state_float : group->stateType_float) {
+					if (!state_float.CheckOperater(GetParameterFloat(state_float.paramName))) {
+						skipThisNode = true;
+						break;
+					}
+				}
+				if (skipThisNode) continue;
+
+				//Check state type bool
+				for (StateNode<float> state_bool : group->stateType_float) {
+					if (!state_bool.CheckOperater(GetParameterFloat(state_bool.paramName))) {
+						skipThisNode = true;
+						break;
+					}
+				}
+				if (skipThisNode) continue;
+
+				//Change current node
+				ChangeAnimationNode(iter.first);
+				break;
+			}
+		}
+	}
 }
 
 SpriteAnimation* AnimationController::GetCurrentAniamtion()
@@ -48,6 +112,21 @@ void AnimationController::AddAnimationNode(std::string nodeName, SpriteAnimation
 	anim_node.insert(std::pair<std::string, AnimationNode*>(nodeName, iter));
 }
 
+void AnimationController::SetHasExitTime(std::string targetNode, std::string nextNode, bool isHasExitTime)
+{
+	AnimationNode* node = anim_node[targetNode];
+
+	if (node->stateGroup.find(nextNode) == node->stateGroup.end()) {
+		StateGroup* iter = new StateGroup();
+		iter->isHasExitTime = isHasExitTime;
+		node->stateGroup.insert(std::pair<std::string, StateGroup*>(nextNode, iter));
+	}
+	else {
+		StateGroup* iter = node->stateGroup[nextNode];
+		iter->isHasExitTime = isHasExitTime;
+	}
+}
+
 void AnimationController::AddTrigger(std::string paramKey, std::string targetAnim)
 {
 	if (anim_node.find(targetAnim) == anim_node.end()) {
@@ -59,9 +138,8 @@ void AnimationController::AddTrigger(std::string paramKey, std::string targetAni
 	tmp.paramName = paramKey;
 	tmp.operater = EQUALS;
 	tmp.targetValue = (trigger)true;
-	tmp.changeNodeName = targetAnim;
 
-	stateType_Trigger.push_back(tmp);
+	stateType_Trigger.insert(std::pair<std::string, StateNode<trigger>>(targetAnim, tmp));
 }
 
 void AnimationController::SetEntryAnimationNode(std::string targetAnim)
@@ -141,4 +219,10 @@ bool AnimationController::GetParameterBool(std::string paramKey)
 	}
 
 	return param_bool[paramKey];
+}
+
+void AnimationController::ChangeAnimationNode(std::string nextAnim)
+{
+	current_node = anim_node.find(nextAnim);
+	current_node->second->currentAnim->RestartAnimation();
 }

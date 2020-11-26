@@ -9,7 +9,7 @@ class GameObject :
     public Entity
 {
 public:
-    GameObject() : transform(nullptr) {}
+    GameObject() : transform(nullptr) { Init(); }
     ~GameObject() {}
 
     virtual void Init() override;

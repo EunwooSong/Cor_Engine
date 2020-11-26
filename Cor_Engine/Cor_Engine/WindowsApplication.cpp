@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "WindowsApplication.h"
 #include <string>
+#include "Windows.h"
+
+std::unique_ptr<WindowsApplication> WindowsApplication::instance;
+std::once_flag WindowsApplication::onlyOnce;
+
+WindowsApplication::~WindowsApplication()
+{
+}
 
 LRESULT WindowsApplication::WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
     switch (iMessage)
@@ -18,7 +26,7 @@ HWND WindowsApplication::FloatWindow(int cmdShow) {
     wchar_t app_buffer[50];
     mbstowcs(app_buffer, appName.c_str(), appName.size() + 1);
 
-    hWnd = CreateWindow(
+    /*hWnd = CreateWindow(
         TEXT("ZERO_ENGINE"),
         app_buffer,
         isFullScreen ? WS_EX_TOPMOST | WS_POPUP
@@ -30,39 +38,30 @@ HWND WindowsApplication::FloatWindow(int cmdShow) {
         (HMENU)NULL,
         hInstance,
         NULL
-    );
+    );*/
 
-    ShowWindow(hWnd, 10);
+    hWnd = CreateWindow(L"ZeroEngine", app_buffer,
+        WS_EX_TOPMOST | ((isFullScreen) ? WS_POPUP : WS_OVERLAPPEDWINDOW), 100, 0, windowWidth, windowHeight,
+        GetDesktopWindow(), NULL, hInstance, NULL);
+    ShowWindow(hWnd, SW_SHOWDEFAULT);
     return hWnd;
 }
 void WindowsApplication::Initialize() {
     ZeroMemory(&hInstance, sizeof(hInstance));
     hInstance = GetModuleHandle(NULL);
-    
-    wchar_t buffer[50];
-    mbstowcs(buffer, appName.c_str(),appName.size() + 1);
 
-    WNDCLASSEX wndClass = {
-        sizeof(WNDCLASSEX),
-        CS_CLASSDC,
-        WndProc, 0L, 0L,
-        GetModuleHandle(NULL),
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        buffer,
-        NULL };
-
-    RegisterClassEx(&wndClass);
+    WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L,
+        hInstance, NULL, NULL, NULL, NULL,
+        L"ZeroEngine", NULL };
+    RegisterClassEx(&wc);
 }
 void WindowsApplication::RegisterInfo(std::string app_name, int w, int h, bool ifs)
 {
     appName = app_name; windowHeight = h; windowWidth = w; isFullScreen = ifs;
 }
 WindowsApplication* WindowsApplication::Instance() {
-    static WindowsApplication* iter = new WindowsApplication();
-    return iter;
+    static WindowsApplication iter;
+    return &iter;
 }
 MSG WindowsApplication::CheckMessage() {
     if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {

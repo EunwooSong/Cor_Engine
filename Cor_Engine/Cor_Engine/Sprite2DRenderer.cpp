@@ -12,21 +12,14 @@ Sprite2DRenderer::Sprite2DRenderer(std::string path) {
 }
 
 void Sprite2DRenderer::SetTexture(const char* path) {
-    texture = ZERO_TEXTURE_MGR->LoadTextureFormFile(path);
-
-    D3DSURFACE_DESC desc;
-    (*texture)->GetLevelDesc(0, &desc);
-
-    width = desc.Width;
-    height = desc.Height;
-
-    visibleRect = Rect(0, 0, width, height);
-
-    color = D3DCOLOR_ARGB(255, 255, 255, 255);
+    SetTexture(ZERO_TEXTURE_MGR->LoadTextureFormFile(path));
 }
 
 void Sprite2DRenderer::Render() {
     Component::Render();
+    
+    if (!isVisible || !texture) return;
+
     Transform* transform = m_Owner->GetScene()->GetComponent<Transform>(m_Owner->GetEntityID());
     ZERO_DIRECT3D->GetSprite()->SetTransform(&transform->GetMatrix());
     ZERO_DIRECT3D->GetSprite()->Draw(*texture, &visibleRect, NULL, NULL, color);

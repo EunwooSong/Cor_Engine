@@ -3,7 +3,7 @@
 #define KEY_NONE    -1
 #define KEY_DOWN    0
 #define KEY_UP      1
-#define KEY_STAY    2
+#define KEY_PRESS   2
 
 #include <Windows.h>
 
@@ -18,7 +18,7 @@ public:
     void Update();
 
     int GetKeyState(int vk) {
-        if (currentKeys[vk] && lastKeys[vk]) return KEY_STAY;
+        if (currentKeys[vk] && lastKeys[vk]) return KEY_PRESS;
         else if (currentKeys[vk] && !lastKeys[vk])
             return KEY_DOWN;
         else if (!currentKeys[vk] && lastKeys[vk])

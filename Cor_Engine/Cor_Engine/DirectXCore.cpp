@@ -1,5 +1,12 @@
-#include "DirectXCore.h"
 #include "stdafx.h"
+#include "DirectXCore.h"
+
+std::unique_ptr<DirectXCore> DirectXCore::instance;
+std::once_flag DirectXCore::onlyOnce;
+
+DirectXCore::~DirectXCore()
+{
+}
 
 void DirectXCore::Initialize(HWND hWnd) {
     p_d3d = Direct3DCreate9(D3D_SDK_VERSION);
@@ -29,10 +36,6 @@ void DirectXCore::Release() {
 void DirectXCore::BeginRender() {
     p_d3d_device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
     p_d3d_device->BeginScene();
-
-    p_d3d_device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
-    p_d3d_device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
-    p_d3d_device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
 }
 void DirectXCore::EndRender() {
     p_d3d_sprite->End();
@@ -48,7 +51,6 @@ void DirectXCore::RegisterInfo(int w, int h, bool ifs)
 }
 
 DirectXCore* DirectXCore::Instance() {
-    static DirectXCore* iter = new DirectXCore();
-
-    return iter;
+    static DirectXCore iter;
+    return &iter;
 }

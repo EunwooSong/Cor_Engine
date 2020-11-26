@@ -70,7 +70,7 @@ ComponentManager::~ComponentManager() {
         auto const& componentArray = components->GetComponentArray();
 
         for (auto compoIter : componentArray) {
-            SAFE_DELETE(compoIter);
+            if(compoIter) SAFE_DELETE(compoIter);
         }
     }
 }

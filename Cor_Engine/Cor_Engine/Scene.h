@@ -15,7 +15,7 @@ public:
 
     //Hierarchy, Initialize gameObject
     //Ex, Player* player = new Player();
-    virtual void Init() = 0;
+    virtual void Init();
     void Start();
     void Update();
     void LateUpdate();
@@ -25,7 +25,6 @@ public:
     EntityID CreateEntity(Entity* iter) {
         EntityID tmp = m_EntityIDManager->CreateEntityID();
         m_EntityList.insert(std::pair<EntityID, Entity*>(tmp, iter));
-        iter->Init();
         return tmp;
     }
 

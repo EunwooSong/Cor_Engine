@@ -2,11 +2,18 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
+#include "stdafx.h"
 
 #define DIRECTX_CORE DirectXCore::Instance()
 
 class DirectXCore {
 public:
+    static std::unique_ptr<DirectXCore> instance;
+    static std::once_flag onlyOnce;
+
+    DirectXCore() = default;
+    ~DirectXCore();
+
     void Initialize(HWND hWnd);
     void Release();
 

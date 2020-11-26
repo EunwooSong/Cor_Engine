@@ -44,6 +44,12 @@ void SceneManager::ChangeScene(Scene* scene)
     }
 }
 
+SceneManager::~SceneManager()
+{
+    if (currentScene) SAFE_DELETE(currentScene);
+    if (nextScene) SAFE_DELETE(nextScene);
+}
+
 Scene* SceneManager::GetCurrentScene() {
     return currentScene;
 }

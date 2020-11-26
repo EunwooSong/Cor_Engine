@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Scene.h"
-
+#include "AnimationController.h"
+#include "Transform.h"
+#include "RigidBody2D.h"
+#include "BoxCollider.h"
+#include "Sprite2DRenderer.h"
+#include "Button.h"
 
 Scene::Scene() {
 }
@@ -9,6 +14,7 @@ Scene::~Scene() {
     for (auto iter : m_EntityList) {
         SAFE_DELETE(iter.second);
     }
+
 }
 void Scene::Init() {
     m_ComponentManager = std::make_unique<ComponentManager>();
@@ -16,12 +22,12 @@ void Scene::Init() {
     m_ColliderManager = std::make_unique<ColliderManager>();
 
     //Register Component(Transform, RigidBody, 2D Renderer, Collider . . .)
-    /*RegisterComponent<Transform>();
-    RegisterComponent<CameraComponent>();
+    RegisterComponent<Transform>();
+    RegisterComponent<AnimationController>();
     RegisterComponent<RigidBody2D>();
     RegisterComponent<Sprite2DRenderer>();
     RegisterComponent<BoxCollider>();
-    RegisterComponent<Button>();*/
+    RegisterComponent<Button>();
 }
 void Scene::Start() {
     m_ComponentManager->Start();

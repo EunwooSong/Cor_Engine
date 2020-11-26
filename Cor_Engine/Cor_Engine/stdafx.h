@@ -27,6 +27,8 @@
 #include <d3dx9math.h>
 #include <Windows.h>
 
+#include <crtdbg.h>
+
 #include "ZeroMath.h"
 
 //DELETE Macro
@@ -53,3 +55,9 @@
             (p) = nullptr;  \
         }                   \
     }
+
+//DEBUG Macro
+#if defined(DEBUG) || defined(_DEBUG)
+#define DEBUG_NEW new( _NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif // DEBUG || _DEBUG

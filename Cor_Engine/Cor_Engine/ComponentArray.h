@@ -11,12 +11,20 @@ class IComponentArray {
 public:
     virtual ~IComponentArray() = default;
     virtual void EntityDestroyed(EntityID _id) = 0;
-    virtual std::array<Component*, MAX_COMPONENTS> GetComponentArray() = 0;
+    virtual std::vector<Component*> GetComponentArray() = 0;
 };
 
 template<typename T>
 class ComponentArray : public IComponentArray {
 public:
+    ~ComponentArray() {
+        /*int i = 0;
+        for (auto& iter : m_ComponentArray) {
+            i++;
+            if (iter) SAFE_DELETE(dynamic_cast<Component*>(iter));
+        }*/
+    }
+
     void AddComponent(EntityID _id, T* component) {
         assert(m_EntityToIndexMap.find(_id) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -24,7 +32,7 @@ public:
         size_t newIndex = m_Size;
         m_EntityToIndexMap[_id] = newIndex;
         m_IndexToEntityMap[newIndex] = _id;
-        m_ComponentArray[newIndex] = component;
+        m_ComponentArray.push_back(component);
 
         m_Size++;
     }
@@ -49,7 +57,7 @@ public:
     }
 
     T* GetComponent(EntityID _id) {
-        //assert(m_EntityToIndexMap.find(_id) != m_EntityToIndexMap.end() && "Retrieving non-existent component");
+        assert(m_EntityToIndexMap.find(_id) != m_EntityToIndexMap.end() && "Retrieving non-existent component");
         if (m_EntityToIndexMap.find(_id) == m_EntityToIndexMap.end()) {
             std::cout << "Retrieving non-existent component" << std::endl;
             return nullptr;
@@ -65,16 +73,16 @@ public:
         }
     }
 
-    std::array<Component*, MAX_COMPONENTS> GetComponentArray() {
-        std::array<Component*, MAX_COMPONENTS> m_compoArray{};
-        for (int i = 0; i < MAX_COMPONENTS; i++)
-            m_compoArray[i] = dynamic_cast<Component*>(m_ComponentArray[i]);
+    std::vector<Component*> GetComponentArray() override {
+        std::vector<Component*> m_compoArray{};
+        for (auto iter : m_ComponentArray)
+            m_compoArray.push_back(dynamic_cast<Component*>(iter));
 
         return m_compoArray;
     }
 
 private:
-    std::array<T*, MAX_COMPONENTS> m_ComponentArray;
+    std::vector<T*> m_ComponentArray;
     std::unordered_map<EntityID, size_t> m_EntityToIndexMap;
     std::unordered_map<size_t, EntityID> m_IndexToEntityMap;
 
