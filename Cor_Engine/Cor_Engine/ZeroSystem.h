@@ -54,5 +54,7 @@ public:
     TimeManager* timeMgr;
     InputManager* inputMgr;
     DirectXTextureManager* textureMgr;
+
+private:
     bool isDebug;
 };

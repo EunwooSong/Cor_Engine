@@ -46,6 +46,9 @@
     <Filter Include="소스 파일\ZeroEngine\CoreComponents\Data Struct">
       <UniqueIdentifier>{a8bf8979-0307-4da9-bba8-3282cc87793d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ZeroEngine\CLogger">
+      <UniqueIdentifier>{e08f0688-473f-4300-b7b9-bbff007c26dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXCore.h">
@@ -138,6 +141,9 @@
     <ClInclude Include="TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CLogger.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -219,7 +225,10 @@
       <Filter>소스 파일\ZeroEngine\CoreComponents\Data Struct</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CLogger.cpp">
+      <Filter>소스 파일\ZeroEngine\CLogger</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

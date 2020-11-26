@@ -212,7 +212,7 @@ void CLogger::Error(const char* mes, ...) {
 }
 
 void CLogger::Debug(const char* mes, ...) {
-    if (!GlobalPreferences::DEBUG) {
+    if (!ZERO_ENGINE->GetIsDebug()) {
         return;
     }
 
