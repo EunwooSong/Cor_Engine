@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -231,4 +232,239 @@
       <Filter>소스 파일\ZeroEngine\CLogger</Filter>
     </ClCompile>
   </ItemGroup>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\InGame">
+      <UniqueIdentifier>{bb23c598-87b5-4dbc-9e97-54d387ef5e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\InGame\Scene">
+      <UniqueIdentifier>{c73f94dc-9a9c-454c-9e81-3c410d99acdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\InGame\Scripts">
+      <UniqueIdentifier>{a5957474-8e36-4eb8-9688-a414d267760b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine">
+      <UniqueIdentifier>{67e579f9-5e1a-4bbf-b77e-67759825d513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\ECS Core">
+      <UniqueIdentifier>{33047206-0e84-4468-9c2c-0297959a5ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\Application">
+      <UniqueIdentifier>{5a4c1044-ab3e-42ce-9e40-500c2b2a16d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\SystemFunc">
+      <UniqueIdentifier>{d49f1049-fa03-44aa-853c-107b7aa2e195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\CoreComponents">
+      <UniqueIdentifier>{260e262c-d998-4c5b-a4c7-fb550752a42e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\Managers">
+      <UniqueIdentifier>{af9f1186-2114-4d87-90c1-10ea700eac65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\Managers\CoreComponentManager">
+      <UniqueIdentifier>{11633b97-7f25-486c-b3e4-b540073affd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\CoreComponents\Data Struct">
+      <UniqueIdentifier>{a8bf8979-0307-4da9-bba8-3282cc87793d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ZeroEngine\CLogger">
+      <UniqueIdentifier>{7f1ed74d-75eb-4d55-82d2-62b25e6e7e53}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DirectXCore.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsApplication.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityIDManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS_Type.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentArray.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroSystem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroStruct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXTextureManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite2DRenderer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteAnimation.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CharMovement.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CharManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CLogger.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DirectXCore.cpp">
+      <Filter>소스 파일\ZeroEngine\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsApplication.cpp">
+      <Filter>소스 파일\ZeroEngine\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentArray.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityIDManager.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentManager.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\ZeroEngine\ECS Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeroSystem.cpp">
+      <Filter>소스 파일\ZeroEngine\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXTextureManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite2DRenderer.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody2D.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers\CoreComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CharMovement.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CharManager.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteAnimation.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents\Data Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CLogger.cpp">
+      <Filter>소스 파일\ZeroEngine\CLogger</Filter>
+    </ClCompile>
+  </ItemGroup>
+>>>>>>> Stashed changes
 </Project>
