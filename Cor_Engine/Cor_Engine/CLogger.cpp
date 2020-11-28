@@ -1,7 +1,4 @@
-//
-// Created by HADMARINE on 2020/09/20.
-//
-
+#include "stdafx.h"
 #include "CLogger.h"
 #include "ZeroSystem.h"
 

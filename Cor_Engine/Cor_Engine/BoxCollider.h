@@ -11,7 +11,7 @@ public:
 
     Vec2 GetCenterPos();
 
-    Vec2 GetSize();
+    Vec2 GetSize(); 
 
     float GetRotation() const {
         return this->rotation;

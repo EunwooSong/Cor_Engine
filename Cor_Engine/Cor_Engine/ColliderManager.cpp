@@ -27,6 +27,17 @@ std::vector<std::unordered_set<BoxCollider*>> ColliderManager::GetColliderQueue(
 }
 
 namespace CalculateFunctions {
+
+#define PI 3.14159265358979323846f
+
+    double deg_to_rad(float deg) {
+        return deg * PI / 180;
+    }
+
+    double rad_to_deg(float rad) {
+        return rad * 180 / PI;
+    }
+
     Vec2 getHeightVector(BoxCollider* a) {
         Vec2 ret;
         ret.x = a->GetSize().y * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
@@ -50,16 +61,6 @@ namespace CalculateFunctions {
         return ret;
     }
 
-#define PI 3.14159265358979323846f
-
-    double deg_to_rad(float deg) {
-        return deg * PI / 180;
-    }
-
-    double rad_to_deg(float rad) {
-        return rad * 180 / PI;
-    }
-
     double dotProduct(Vec2& l, Vec2& r) {
         return l.x * r.x + l.y * r.y;
     }
@@ -72,6 +73,7 @@ namespace CalculateFunctions {
         Vec2 ret;
         ret.x = a.x + b.x;
         ret.y = a.y + b.y;
+        return ret;
     }
 
     double absDotVector(Vec2 a, Vec2 b) {
