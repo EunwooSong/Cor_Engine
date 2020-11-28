@@ -15,7 +15,7 @@ void ColliderManager::MountCollider(BoxCollider* colA,
     colliderSet.insert(colB);
     for (auto iter : this->colliderQueue) {
         if (iter == colliderSet) {
-            std::cout << "[ColliderManager] Collide case already exists!" << std::endl;
+            CLogger::Debug("[ColliderManager] Collide case already exists!");
             return;
         }
     }
@@ -29,21 +29,21 @@ std::vector<std::unordered_set<BoxCollider*>> ColliderManager::GetColliderQueue(
 namespace CalculateFunctions {
     Vec2 getHeightVector(BoxCollider* a) {
         Vec2 ret;
-        ret.x = a->GetLeftTopPos().y * sinf(a->GetRotation()) / 2;
-        ret.y = a->GetRightBottomPos().y * cosf(a->GetRotation()) / 2;
+        ret.x = a->GetSize().y * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
+        ret.x = a->GetSize().y * sin(deg_to_rad(a->GetRotation() - 90)) / 2;
         return ret;
     }
 
     Vec2 getWidthVector(BoxCollider* a) {
         Vec2 ret;
-        ret.x = a->GetRightBottomPos().x * cosf(a->GetRotation()) / 2;
-        ret.y = a->GetLeftTopPos().x * sinf(a->GetRotation()) / 2;
+        ret.x = a->GetSize().x * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
+        ret.y = a->GetSize().x * sin(deg_to_rad(a->GetRotation() - 90)) / 2;
         return ret;
     }
 
     Vec2 getUnitVector(Vec2 a) {
         Vec2 ret;
-        float size;
+        double size;
         size = sqrt(pow(a.x, 2) + pow(a.y, 2));
         ret.x = a.x / size;
         ret.y = a.y / size;
@@ -52,16 +52,30 @@ namespace CalculateFunctions {
 
 #define PI 3.14159265358979323846f
 
-    float deg_to_rad(float deg) {
+    double deg_to_rad(float deg) {
         return deg * PI / 180;
     }
 
-    float rad_to_deg(float rad) {
+    double rad_to_deg(float rad) {
         return rad * 180 / PI;
     }
 
-    float dotProduct(Vec2& l, Vec2& r) {
+    double dotProduct(Vec2& l, Vec2& r) {
         return l.x * r.x + l.y * r.y;
+    }
+
+    Vec2 getDistanceVector(BoxCollider* a, BoxCollider* b) {
+        return a->GetCenterPos() - b->GetCenterPos();
+    }
+
+    Vec2 addVector(Vec2 a, Vec2 b) {
+        Vec2 ret;
+        ret.x = a.x + b.x;
+        ret.y = a.y + b.y;
+    }
+
+    double absDotVector(Vec2 a, Vec2 b) {
+        return abs(a.x * b.x + a.y * b.y);
     }
 
     Vec2 crossProduct(Vec2 l, Vec2 r) {
@@ -121,12 +135,12 @@ void evalCollision(BoxCollider* _A, BoxCollider* _B) {
 
     // Apply impulse
     Vec2 impulse = j * normal;
-    //        A->SetVelocity(- (1 / A->GetMass() * impulse));
-    //        B->SetVelocity((1 / B->GetMass() * impulse));
-    auto aVel = A->GetVelocity();
-    auto bVel = B->GetVelocity();
-    A->SetVelocity(Vec2(aVel.x, 0));
-    B->SetVelocity(Vec2(bVel.x, 0));
+    A->SetVelocity(- (1 / A->GetMass() * impulse));
+    B->SetVelocity((1 / B->GetMass() * impulse));
+    //auto aVel = A->GetVelocity();
+    //auto bVel = B->GetVelocity();
+    //A->SetVelocity(Vec2(aVel.x, 0));
+    //B->SetVelocity(Vec2(bVel.x, 0));
 }
 
 bool EvalAABB(BoxCollider* A, BoxCollider* B) {
@@ -162,9 +176,9 @@ bool EvalOBB(BoxCollider* A, BoxCollider* B) {
         double sum = 0;
         unit = getUnitVector(i);
         for (auto& j : vec) {
-            sum += abs(j.x * unit.x + j.y * unit.y);
+            sum += absDotVector(j, unit);
         }
-        if (abs(dist.x * unit.x + dist.y * unit.y) > sum) {
+        if (absDotVector(dist, unit) > sum) {
             return false;
         }
     }
@@ -177,7 +191,7 @@ void ColliderManager::LateUpdate() {
         BoxCollider* valB = *++iter.begin();
 
         if (valA == nullptr || valB == nullptr) {
-            std::cout << "[ColliderMananger] Collider is NULL! - Skipping" << std::endl;
+            CLogger::Info("[ColliderMananger] Collider is NULL! - Skipping");
             continue;
         }
 

@@ -12,6 +12,17 @@ Vec2 BoxCollider::GetRightBottomPos() {
     return this->relativeRightBottomPos - this->relativeLeftTopPos + transform->GetWorldPos();
 }
 
+Vec2 BoxCollider::GetCenterPos() {
+    Transform* transform = GetOwner()->GetComponent<Transform>();
+    return this->relativeLeftTopPos + GetSize() / 2;
+}
+
+Vec2 BoxCollider::GetSize() {
+    Transform* transform = GetOwner()->GetComponent<Transform>();
+    return this->relativeRightBottomPos - this->relativeLeftTopPos;
+    
+}
+
 void BoxCollider::Update() {
     Component::Update();
 }

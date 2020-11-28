@@ -31,6 +31,8 @@
 
 #include "ZeroMath.h"
 
+#include "CLogger.h"
+
 //DELETE Macro
 #define SAFE_DELETE(p)     \
     {                      \

@@ -9,6 +9,10 @@ public:
 
     Vec2 GetRightBottomPos();
 
+    Vec2 GetCenterPos();
+
+    Vec2 GetSize();
+
     float GetRotation() const {
         return this->rotation;
     }
