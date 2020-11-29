@@ -170,6 +170,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="RigidBody2D.h" />
+    <ClInclude Include="RigidBodyTestScene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite2DRenderer.h" />
     <ClInclude Include="SpriteAnimation.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="RigidBody2D.cpp" />
+    <ClCompile Include="RigidBodyTestScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite2DRenderer.cpp" />
     <ClCompile Include="SpriteAnimation.cpp" />

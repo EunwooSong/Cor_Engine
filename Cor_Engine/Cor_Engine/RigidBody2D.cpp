@@ -9,19 +9,11 @@
 void RigidBody2D::LateUpdate() {
     auto deltaTime = ZERO_TIME_MGR->GetDeltaTime();
 
-    Vec2 vel{ 0, 0 };
+    Vec2 vel{ 0.0, 0.0 };
 
     vel.y += deltaTime * GetGravity();
 
     AddVelocity(vel);
 
     GetOwner()->transform->Translate(Vec2(deltaTime * GetVelocity().x, deltaTime * GetVelocity().y));
-}
-
-float RigidBody2D::GetGravity() {
-    if (GetOwner()->GetComponent<BoxCollider>()->GetIsCollided()) {
-        return 0.0f;
-    }
-
-    return gravity;
 }
