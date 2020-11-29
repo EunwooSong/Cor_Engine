@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Transform.h"
+#include "GameObject.h"
+#include "Sprite2DRenderer.h"
 
 void Transform::Start() {
     Component::Start();
@@ -39,4 +41,10 @@ void Transform::UpdateTransformation() {
     if (children.size() > 0)
         for (auto& child : children)
             child->UpdateTransformation();
+}
+
+Vec2 Transform::GetRightBottomPos()
+{
+    Vec2 size = GetOwner()->GetComponent<Sprite2DRenderer>()->GetTextureSize();
+    return worldPos + size;
 }

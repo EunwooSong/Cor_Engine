@@ -23,6 +23,7 @@ public:
     
     Vec2 GetLocalPos() { return localPos; }
     Vec2 GetWorldPos() { return worldPos; }
+    Vec2 GetRightBottomPos();
     float GetRotation() { return rotation; }
     Vec2 GetScale() { return scale; }
     Transform* GetChild(int index) { return children[index]; }
