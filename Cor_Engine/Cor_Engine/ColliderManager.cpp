@@ -28,27 +28,27 @@ std::vector<std::unordered_set<BoxCollider*>> ColliderManager::GetColliderQueue(
 
 namespace CalculateFunctions {
 
-#define PI 3.14159265358979323846f
+    constexpr double PI = 3.14159265358979;
 
-    double deg_to_rad(float deg) {
-        return deg * PI / 180;
+    double deg_to_rad(double deg) {
+        return deg / 180 * PI;
     }
 
-    double rad_to_deg(float rad) {
+    double rad_to_deg(double rad) {
         return rad * 180 / PI;
     }
 
     Vec2 getHeightVector(BoxCollider* a) {
         Vec2 ret;
-        ret.x = a->GetSize().y * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
-        ret.x = a->GetSize().y * sin(deg_to_rad(a->GetRotation() - 90)) / 2;
+        ret.x = (double)a->GetScaleValue().y * 2 * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
+        ret.x = (double)a->GetScaleValue().y * 2 * sin(deg_to_rad(a->GetRotation() - 90)) / 2;
         return ret;
     }
 
     Vec2 getWidthVector(BoxCollider* a) {
         Vec2 ret;
-        ret.x = a->GetSize().x * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
-        ret.y = a->GetSize().x * sin(deg_to_rad(a->GetRotation() - 90)) / 2;
+        ret.x = (double)a->GetScaleValue().x * 2 * cos(deg_to_rad(a->GetRotation())) / 2;
+        ret.y = (double)a->GetScaleValue().x * 2 * sin(deg_to_rad(a->GetRotation())) / 2;
         return ret;
     }
 
@@ -61,12 +61,12 @@ namespace CalculateFunctions {
         return ret;
     }
 
-    double dotProduct(Vec2& l, Vec2& r) {
-        return l.x * r.x + l.y * r.y;
-    }
-
     Vec2 getDistanceVector(BoxCollider* a, BoxCollider* b) {
         return a->GetCenterPos() - b->GetCenterPos();
+    }
+
+    double dotProduct(Vec2& l, Vec2& r) {
+        return (double)l.x * r.x + (double)l.y * r.y;
     }
 
     Vec2 addVector(Vec2 a, Vec2 b) {
@@ -153,6 +153,7 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
     a = setMinMax(A);
     b = setMinMax(B);
 
+    std::cout << "AABB COLLISON" << std::endl;
     std::cout << a.max.x << " " << a.min.x << std::endl;
     std::cout << a.max.y << " " << a.min.y << std::endl;
     std::cout << b.max.x << " " << b.min.x << std::endl;
@@ -165,20 +166,21 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
 }
 
 bool EvalOBB(BoxCollider* A, BoxCollider* B) {
+    std::cout << "OBB COLLISION" << std::endl;
+
     using namespace CalculateFunctions;
-    Vec2 dist = ((A->GetLeftTopPos() + A->GetRightBottomPos()) / 2) -
-        ((B->GetLeftTopPos() + B->GetRightBottomPos()) / 2);
+    Vec2 dist = getDistanceVector(A, B);
     Vec2 vec[4] = {
             getHeightVector(A),
             getHeightVector(B),
             getWidthVector(A),
             getWidthVector(B) };
     Vec2 unit;
-    for (auto& i : vec) {
+    for (int i = 0; i < 4; i++) {
         double sum = 0;
-        unit = getUnitVector(i);
-        for (auto& j : vec) {
-            sum += absDotVector(j, unit);
+        unit = getUnitVector(vec[i]);
+        for (int j = 0; j < 4; j++) {
+            sum += absDotVector(vec[j], unit);
         }
         if (absDotVector(dist, unit) > sum) {
             return false;

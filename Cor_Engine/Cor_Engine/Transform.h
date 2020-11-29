@@ -30,10 +30,12 @@ public:
     const D3DXMATRIX& GetMatrix() { return mat; }
 
     void SetParent(Transform* iter)     { parent = iter; };
+    void SetLocalPos(double x, double y) { this->localPos = Vec2(x, y); }
     void SetLocalPos(Vec2 localPos)     { this->localPos = localPos; };
     void SetRotation(float z)           { this->rotation = z; }
     void SetRotationCenter(Vec2 rc)     { rotationCenter = rc; }
     void SetScale(Vec2 scale)           { this->scale = scale; }
+    void SetScale(double x, double y)   { this->scale = Vec2(x, y); }
     void SetScaleCenter(Vec2 sc)        { scaleCenter = sc; }
     void SetIsUiObject(bool isUiObject) { this->isUiObject = isUiObject; }
     

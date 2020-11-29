@@ -2,26 +2,26 @@
 #include "Component.h"
 class RigidBody2D : public Component {
 public:
-    RigidBody2D() = default;
+    RigidBody2D() : mass(0.0), restitution(0.0) {};
 
     void LateUpdate() override;
 
     Vec2 GetVelocity() { return this->velocity; }
-    float GetMass() { return this->mass; }
-    float GetRestitution() { return this->restitution; }
-    float GetGravity();
+    double GetMass() { return this->mass; }
+    double GetRestitution() { return this->restitution; }
+    double GetGravity() { return this->gravity; }
 
     void SetVelocity(Vec2 v) { this->velocity = v; }
     void AddVelocity(Vec2 v) { this->velocity += v; }
 
-    void SetMass(float m) { this->mass = m; }
-    void SetRestitution(float r) { this->restitution = r; }
-    void SetGravity(float g) { this->gravity = g; }
+    void SetMass(double m) { this->mass = m; }
+    void SetRestitution(double r) { this->restitution = r; }
+    void SetGravity(double g) { this->gravity = g; }
 
 private:
-    Vec2 velocity;
-    float mass;
-    float restitution;
-    float gravity = 980.0f;
+    Vec2 velocity = Vec2(0.0, 0.0);
+    double mass = 0.0;
+    double restitution = 0.0;
+    double gravity = 980.0;
 };
 
