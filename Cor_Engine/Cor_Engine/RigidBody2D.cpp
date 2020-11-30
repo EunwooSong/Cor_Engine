@@ -15,5 +15,6 @@ void RigidBody2D::LateUpdate() {
 
     AddVelocity(vel);
 
-    GetOwner()->transform->Translate(Vec2(deltaTime * GetVelocity().x, deltaTime * GetVelocity().y));
+    GetOwner()->transform->Translate(
+        Vec2(deltaTime * GetVelocity().x, deltaTime * GetVelocity().y));
 }

@@ -3,7 +3,7 @@
 
 class BoxCollider : public Component {
 public:
-    BoxCollider() = default;
+    BoxCollider();
     BoxCollider(Vec2 centerPos, Vec2 scale, double rotate);
     Vec2 GetLeftTopPos();
 
