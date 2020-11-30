@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "RigidBody2D.h"
 #include "ZeroSystem.h"
+#include <cstdlib>
 
 void ColliderManager::MountCollider(BoxCollider* colA,
     BoxCollider* colB) {
@@ -112,6 +113,8 @@ namespace CalculateFunctions {
 }
 
 void evalCollision(BoxCollider* _A, BoxCollider* _B) {
+    system("pause");
+
     using namespace CalculateFunctions;
 
     auto A = _A->GetOwner()->GetComponent<RigidBody2D>();
@@ -137,8 +140,8 @@ void evalCollision(BoxCollider* _A, BoxCollider* _B) {
 
     // Apply impulse
     Vec2 impulse = j * normal;
-    A->SetVelocity(- (1 / A->GetMass() * impulse));
-    B->SetVelocity((1 / B->GetMass() * impulse));
+    //A->AddVelocity(-1 * (1 / A->GetMass() * impulse));
+    //B->AddVelocity(1 / B->GetMass() * impulse);
     //auto aVel = A->GetVelocity();
     //auto bVel = B->GetVelocity();
     //A->SetVelocity(Vec2(aVel.x, 0));
@@ -153,7 +156,7 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
     a = setMinMax(A);
     b = setMinMax(B);
 
-    std::cout << "AABB COLLISON" << std::endl;
+    CLogger::Debug("AABB COLLISION");
     std::cout << a.max.x << " " << a.min.x << std::endl;
     std::cout << a.max.y << " " << a.min.y << std::endl;
     std::cout << b.max.x << " " << b.min.x << std::endl;
@@ -166,7 +169,7 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
 }
 
 bool EvalOBB(BoxCollider* A, BoxCollider* B) {
-    std::cout << "OBB COLLISION" << std::endl;
+    CLogger::Debug("OBB COLLISION");
 
     using namespace CalculateFunctions;
     Vec2 dist = getDistanceVector(A, B);
@@ -199,6 +202,11 @@ void ColliderManager::LateUpdate() {
             continue;
         }
 
+        if (valA->GetIsMounted() == false || valB->GetIsMounted() == false) {
+            CLogger::Debug("[ColliderManager] Collider is not started yet! - Skipping");
+            continue;
+        }
+
         bool isCollided;
 
         if (valA->GetRotation() == 0.0f && valB->GetRotation() == 0.0f) {
@@ -207,6 +215,10 @@ void ColliderManager::LateUpdate() {
         else {
             isCollided = EvalOBB(valA, valB);
         }
+
+        CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
+
+        system("pause");
 
         if (isCollided) {
             if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
@@ -266,8 +278,6 @@ void ColliderManager::LateUpdate() {
             valA->SetIsCollided(false);
             valB->SetIsCollided(false);
         }
-        //            CLogger::Debug("[ColliderManager] Collider started : status : %s",  );
-        std::cout << (isCollided ? "true" : "false") << std::endl;
 
     }
 

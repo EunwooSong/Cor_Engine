@@ -10,6 +10,7 @@ public:
     double GetMass() { return this->mass; }
     double GetRestitution() { return this->restitution; }
     double GetGravity() { return this->gravity; }
+    bool GetIsStrict() { return this->strict; }
 
     void SetVelocity(Vec2 v) { this->velocity = v; }
     void AddVelocity(Vec2 v) { this->velocity += v; }
@@ -17,11 +18,13 @@ public:
     void SetMass(double m) { this->mass = m; }
     void SetRestitution(double r) { this->restitution = r; }
     void SetGravity(double g) { this->gravity = g; }
+    void setIsStrict(bool s) { this->strict = s; }
 
 private:
     Vec2 velocity = Vec2(0.0, 0.0);
-    double mass = 0.0;
-    double restitution = 0.0;
+    double mass = 1.0;
+    double restitution = 1.0;
     double gravity = 980.0;
+    bool strict = false;
 };
 

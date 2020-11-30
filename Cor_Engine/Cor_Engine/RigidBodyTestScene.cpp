@@ -6,15 +6,9 @@
 #include "BoxCollider.h"
 #include "Transform.h"
 
-RigidBodyTestScene::RigidBodyTestScene()
-{
+RigidBodyTestScene::RigidBodyTestScene() = default;
 
-}
-
-
-RigidBodyTestScene::~RigidBodyTestScene()
-{
-}
+RigidBodyTestScene::~RigidBodyTestScene() = default;
 
 void RigidBodyTestScene::Init() {
 	Scene::Init();
@@ -24,6 +18,7 @@ void RigidBodyTestScene::Init() {
 
 	rect1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
 	rect2->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
+	rect2->transform->SetLocalPos(0, 200);
 	//rect1->transform->SetLocalPos(1280 / 2, 720 / 2);
 	//rect2->transform->SetLocalPos(1280 / 2, 720 / 2 + 200);
 	//rect1->transform->SetScale(1.0f, 1.0f);
@@ -35,10 +30,12 @@ void RigidBodyTestScene::Init() {
 
 	auto rect1Collider = rect1->AddComponent<BoxCollider>();
 	auto rect2Collider = rect2->AddComponent<BoxCollider>();
-	rect1Collider->SetIsTrigger(true);
-	rect2Collider->SetIsTrigger(true);
+	//rect1Collider->SetIsTrigger(true);
+	//rect2Collider->SetIsTrigger(true);
 	//rect1Collider->SetAbsolutePos(Vec2(1, 1), Vec2(1, 1), 1);
 	//rect2Collider->SetAbsolutePos(Vec2(100, 100), Vec2(1, 1), 0);
 	rect1->AddComponent<RigidBody2D>()->SetGravity(9.8);
-	rect2->AddComponent<RigidBody2D>()->SetGravity(0.0);
+	auto rect2Rg = rect2->AddComponent<RigidBody2D>();
+	rect2Rg->SetGravity(0.0);
+	rect2Rg->setIsStrict(true);
 }

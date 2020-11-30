@@ -111,7 +111,7 @@ void CLogger::RawLogger(const char* mes, ...) {
     SetConsoleTextColor("time");
     cout << CLogger::getTimeNow();
     SetConsoleTextColor();
-    cout << buf << endl;
+    cout << " " << buf << endl;
 #else
     fprintf(stdout, "%s\x1b[0m%s\n", CLogger::getTimeNow().c_str(), buf);
 #endif
@@ -161,7 +161,7 @@ void CLogger::ErrorWithDialog(const char* mes, ...) {
     SetConsoleTextColor("error");
     cout << " ERRR ";
     SetConsoleTextColor("error_i");
-    cout << buf << endl;
+    cout << " " << buf << endl;
     SetConsoleTextColor();
 #else
     fprintf(stderr, "%s\x1b[30;41m ERRR \x1b[31;40m %s\x1b[0m\n",
@@ -229,7 +229,7 @@ void CLogger::Debug(const char* mes, ...) {
     SetConsoleTextColor("debug");
     cout << " DEBG ";
     SetConsoleTextColor("debug_i");
-    cout << " " << mes << endl;
+    cout << " " << buf << endl;
     SetConsoleTextColor();
 #else
     fprintf(stdout, "%s\x1b[30;46m DEBG \x1b[36;40m %s\x1b[0m\n", CLogger::getTimeNow().c_str(), buf);

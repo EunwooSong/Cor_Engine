@@ -9,12 +9,17 @@
 void RigidBody2D::LateUpdate() {
     auto deltaTime = ZERO_TIME_MGR->GetDeltaTime();
 
-    Vec2 vel{ 0.0, 0.0 };
+    if (!this->strict) {
+        Vec2 vel{ 0.0, 0.0 };
 
-    vel.y += deltaTime * GetGravity();
+        vel.y += deltaTime * GetGravity();
 
-    AddVelocity(vel);
+        AddVelocity(vel);
 
-    GetOwner()->transform->Translate(
-        Vec2(deltaTime * GetVelocity().x, deltaTime * GetVelocity().y));
+        GetOwner()->transform->Translate(
+            Vec2(deltaTime * GetVelocity().x, deltaTime * GetVelocity().y));
+    }
+    else {
+        SetVelocity(Vec2(0.0, 0.0));
+    }
 }

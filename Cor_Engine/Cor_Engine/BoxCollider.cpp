@@ -4,12 +4,6 @@
 #include "GameObject.h"
 #include "Scene.h"
 
-BoxCollider::BoxCollider() {
-    auto transform = GetOwner()->transform;
-    this->SetRelativePos(transform->GetWorldPos(),
-        transform->GetRightBottomPos(), transform->GetRotation());
-}
-
 BoxCollider::BoxCollider(Vec2 centerPos, Vec2 scale, double rotate) {
     this->centerPos = centerPos;
     this->scaleValue = scale;
@@ -46,6 +40,14 @@ void BoxCollider::SetAbsolutePos(Vec2 centerPos, Vec2 scale, double rotate) {
     this->centerPos = centerPos;
     this->scaleValue = scale;
     this->rotation = rotate;
+}
+
+void BoxCollider::Start() {
+    Component::Start();
+    auto transform = GetOwner()->transform;
+    this->SetRelativePos(transform->GetWorldPos(),
+        transform->GetRightBottomPos(), transform->GetRotation());
+    this->isMounted = true;
 }
 
 void BoxCollider::Update() {
