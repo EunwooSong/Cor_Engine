@@ -5,6 +5,9 @@
 
 void Transform::Start() {
     Component::Start();
+
+    if (!parent)
+        UpdateTransformation();
 }
 void Transform::Update() {
     Component::Update();
