@@ -4,6 +4,17 @@
 #include "GameObject.h"
 #include "Scene.h"
 
+
+constexpr double PI = 3.14159265358979;
+
+double deg_to_rad(double deg) {
+    return deg / 180 * PI;
+}
+
+double rad_to_deg(double rad) {
+    return rad * 180 / PI;
+}
+
 BoxCollider::BoxCollider(Vec2 centerPos, Vec2 scale, double rotate) {
     this->centerPos = centerPos;
     this->scaleValue = scale;
@@ -33,7 +44,7 @@ void BoxCollider::SetRelativePos(Vec2 lt, Vec2 rb, double rot) {
     auto center = lt + scale;
     this->centerPos = center;
     this->scaleValue = scale;
-    this->rotation = rot;
+    this->rotation = rad_to_deg(rot);
 }
 
 void BoxCollider::SetAbsolutePos(Vec2 centerPos, Vec2 scale, double rotate) {
@@ -47,7 +58,6 @@ void BoxCollider::Start() {
     auto transform = GetOwner()->transform;
     this->SetRelativePos(transform->GetWorldPos(),
         transform->GetRightBottomPos(), transform->GetRotation());
-    this->isMounted = true;
 }
 
 void BoxCollider::Update() {

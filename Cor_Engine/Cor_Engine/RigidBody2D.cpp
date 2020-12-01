@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 
+
 void RigidBody2D::LateUpdate() {
     auto deltaTime = ZERO_TIME_MGR->GetDeltaTime();
 

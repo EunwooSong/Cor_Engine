@@ -23,6 +23,7 @@ public:
 private:
     Vec2 velocity = Vec2(0.0, 0.0);
     double mass = 1.0;
+    double inv_mass = 1.0;
     double restitution = 1.0;
     double gravity = 980.0;
     bool strict = false;

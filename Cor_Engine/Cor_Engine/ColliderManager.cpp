@@ -31,6 +31,13 @@ namespace CalculateFunctions {
 
     constexpr double PI = 3.14159265358979;
 
+    enum class AABBDirection {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
+    };
+
     double deg_to_rad(double deg) {
         return deg / 180 * PI;
     }
@@ -39,6 +46,16 @@ namespace CalculateFunctions {
         return rad * 180 / PI;
     }
 
+    double getLength(Vec2 a) {
+        return (double)sqrt(pow(a.x, 2) + pow(a.y, 2));
+    }
+   
+    Vec2 normalizeVector(Vec2 a) {
+        auto len = getLength(a);
+        Vec2 ret(a.x / len, a.y / len);
+        return ret;
+    }
+         
     Vec2 getHeightVector(BoxCollider* a) {
         Vec2 ret;
         ret.x = (double)a->GetScaleValue().y * 2 * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
@@ -110,6 +127,51 @@ namespace CalculateFunctions {
 
         return xymm;
     }
+
+    AABBDirection getInverseVectorDirection(AABBDirection d) {
+        switch (d) {
+        case AABBDirection::UP:
+            return AABBDirection::DOWN;
+        case AABBDirection::DOWN:
+            return AABBDirection::UP;
+        case AABBDirection::LEFT:
+            return AABBDirection::RIGHT;
+        case AABBDirection::RIGHT:
+            return AABBDirection::LEFT;
+        }
+    }
+
+    AABBDirection getVectorDirection(Vec2 a) {
+        using namespace CalculateFunctions;
+        Vec2 compass[] = {
+            Vec2(0.0f, 1.0f),	// up
+            Vec2(1.0f, 0.0f),	// right
+            Vec2(0.0f, -1.0f),	// down
+            Vec2(-1.0f, 0.0f)	// left
+        };
+
+        double max = 0.0;
+
+        unsigned short best_match = -1;
+        for (unsigned short i = 0; i < 4; i++) {
+            auto norm = normalizeVector(a);
+            double dot_prod = dotProduct(norm, compass[i]);
+            if (dot_prod > max) {
+                max = dot_prod;
+                best_match = i;
+            }
+        }
+        return (AABBDirection)best_match;
+    }
+
+    struct AABBCollision {
+        BoxCollider *collider;
+        AABBDirection direction;
+        AABBCollision(BoxCollider* c, AABBDirection d) {
+            this->collider = c;
+            this->direction = d;
+        }
+    };
 }
 
 void evalCollision(BoxCollider* _A, BoxCollider* _B) {
@@ -148,6 +210,37 @@ void evalCollision(BoxCollider* _A, BoxCollider* _B) {
     //B->SetVelocity(Vec2(bVel.x, 0));
 }
 
+void ResolveAABB(CalculateFunctions::AABBCollision* A, CalculateFunctions::AABBCollision* B) {
+    using namespace CalculateFunctions;
+
+    RigidBody2D* Arg = A->collider->GetOwner()->GetComponent<RigidBody2D>();
+    RigidBody2D* Brg = B->collider->GetOwner()->GetComponent<RigidBody2D>();
+
+    switch (A->direction) {
+    case AABBDirection::UP:
+    case AABBDirection::DOWN:
+    {
+        double newAVelocity = Brg->GetVelocity().y * Brg->GetMass() * Brg->GetRestitution();
+        double newBVelocity = Arg->GetVelocity().y * Arg->GetMass() * Arg->GetRestitution();
+
+        Arg->SetVelocity(Vec2(Arg->GetVelocity().x, newAVelocity));
+        Brg->SetVelocity(Vec2(Brg->GetVelocity().x, newBVelocity));
+
+        return;
+    }
+    case AABBDirection::LEFT:
+    case AABBDirection::RIGHT:
+    {
+        double newAVelocity = Brg->GetVelocity().x * Brg->GetMass() * Brg->GetRestitution();
+        double newBVelocity = Arg->GetVelocity().x * Arg->GetMass() * Arg->GetRestitution();
+
+        Arg->SetVelocity(Vec2(newAVelocity, Arg->GetVelocity().y));
+        Brg->SetVelocity(Vec2(newBVelocity, Brg->GetVelocity().y));
+
+        return;
+    }
+}
+
 bool EvalAABB(BoxCollider* A, BoxCollider* B) {
     using namespace CalculateFunctions;
 
@@ -164,6 +257,12 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
 
     if (a.max.x < b.min.x || a.min.x > b.max.x) return false;
     if (a.max.y < b.min.y || a.min.y > b.max.y) return false;
+
+    auto direction = getVectorDirection(A->GetCenterPos() - B->GetCenterPos());
+    AABBCollision aC(A, direction);
+    AABBCollision bC(B, getInverseVectorDirection(direction));
+
+    ResolveAABB(&aC, &bC);
 
     return true;
 }
@@ -202,11 +301,6 @@ void ColliderManager::LateUpdate() {
             continue;
         }
 
-        if (valA->GetIsMounted() == false || valB->GetIsMounted() == false) {
-            CLogger::Debug("[ColliderManager] Collider is not started yet! - Skipping");
-            continue;
-        }
-
         bool isCollided;
 
         if (valA->GetRotation() == 0.0f && valB->GetRotation() == 0.0f) {
@@ -218,11 +312,9 @@ void ColliderManager::LateUpdate() {
 
         CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
 
-        system("pause");
-
         if (isCollided) {
             if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
-                evalCollision(valA, valB);
+                //evalCollision(valA, valB)
                 if (!valA->GetIsCollided()) {
                     valA->OnCollisionEnter(valB);
                 }

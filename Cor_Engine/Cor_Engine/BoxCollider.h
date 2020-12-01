@@ -21,8 +21,6 @@ public:
 
     bool GetIsTrigger() const { return this->isTrigger; }
 
-    bool GetIsMounted() const { return this->isMounted; }
-
     void SetRelativePos(Vec2 lt, Vec2 rb, double rot = 0);
 
     void SetAbsolutePos(Vec2 centerPos, Vec2 scale, double rotate = 0);
@@ -46,5 +44,4 @@ private:
     double rotation = 0.0;
     bool isCollided = false;
     bool isTrigger = false;
-    bool isMounted = false;
 };
