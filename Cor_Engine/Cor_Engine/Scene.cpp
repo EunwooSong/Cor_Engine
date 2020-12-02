@@ -6,6 +6,8 @@
 #include "BoxCollider.h"
 #include "Sprite2DRenderer.h"
 #include "Button.h"
+#include "GameObject.h"
+#include "CLogger.h"
 
 Scene::Scene() {
 }
@@ -60,4 +62,15 @@ void Scene::EndScene() {
 
 std::vector<Component*> Scene::FindEntityComponents(EntityID _id) {
     return m_ComponentManager->FindEntityComponents(_id);
+}
+
+GameObject* Scene::FindGameObject(std::string name)
+{
+    for (auto iter : m_EntityList) {
+        if (iter.second->GetName().compare(name) == 0)
+            return dynamic_cast<GameObject*>(iter.second);
+    }
+
+    CLogger::Error("Failed to find game object name : %s ", name.c_str());
+    return nullptr;
 }
