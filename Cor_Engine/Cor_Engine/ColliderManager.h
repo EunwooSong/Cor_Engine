@@ -16,3 +16,5 @@ public:
 private:
     std::vector<std::unordered_set<BoxCollider*>> colliderQueue{};
 };
+
+// isPreviousLoopCollisionResolved bool--
