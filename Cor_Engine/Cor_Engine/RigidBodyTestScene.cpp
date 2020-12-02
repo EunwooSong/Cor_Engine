@@ -35,8 +35,12 @@ void RigidBodyTestScene::Init() {
 	//rect2Collider->SetIsTrigger(true);
 	//rect1Collider->SetAbsolutePos(Vec2(1, 1), Vec2(1, 1), 1);
 	//rect2Collider->SetAbsolutePos(Vec2(100, 100), Vec2(1, 1), 0);
-	rect1->AddComponent<RigidBody2D>()->SetGravity(9.8);
+	auto rect1Rg = rect1->AddComponent<RigidBody2D>();
+	rect1Rg->SetGravity(0);
+	rect1Rg->SetVelocity(10, 20);
 	auto rect2Rg = rect2->AddComponent<RigidBody2D>();
-	rect2Rg->SetGravity(1);
+	rect2Rg->SetGravity(0);
+	rect2Rg->SetIsStrict(true);
+	rect2Rg->SetRestitution(1);
 	//rect2Rg->setIsStrict(true);
 }

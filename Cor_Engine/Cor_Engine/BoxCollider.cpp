@@ -31,13 +31,33 @@ Vec2 BoxCollider::GetRightBottomPos() {
 
 Vec2 BoxCollider::GetCenterPos() {
     return this->centerPos;
-}
-
-Vec2 BoxCollider::GetScaleValue()
-{
-    return this->scaleValue;
-}
-
+}
+
+Vec2 BoxCollider::GetScaleValue()
+{
+    return this->scaleValue;
+}
+
+double BoxCollider::GetLeftPos()
+{
+    return (double)this->centerPos.x - scaleValue.x;
+}
+
+double BoxCollider::GetRightPos()
+{
+    return (double)this->centerPos.x + scaleValue.x;
+}
+
+double BoxCollider::GetTopPos()
+{
+    return (double)this->centerPos.y - scaleValue.y;
+}
+
+double BoxCollider::GetBottomPos()
+{
+    return (double)this->centerPos.y + scaleValue.y;
+}
+
 void BoxCollider::SetRelativePos(Vec2 lt, Vec2 rb, double rot) {
     auto size = rb - lt;
     auto scale = size / 2;
