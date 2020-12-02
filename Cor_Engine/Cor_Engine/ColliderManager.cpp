@@ -141,29 +141,6 @@ namespace CalculateFunctions {
         }
     }
 
-    //AABBDirection getVectorDirection(BoxCollider* a, BoxCollider* b) {
-    //    using namespace CalculateFunctions;
-    //    Vec2 compass[] = {
-    //        Vec2(0.0f, 1.0f),	// up
-    //        Vec2(1.0f, 0.0f),	// right
-    //        Vec2(0.0f, -1.0f),	// down
-    //        Vec2(-1.0f, 0.0f)	// left
-    //    };
-
-    //    double max = 0.0;
-
-    //    unsigned short best_match = -1;
-    //    for (unsigned short i = 0; i < 4; i++) {
-    //        auto norm = normalizeVector(a);
-    //        double dot_prod = dotProduct(norm, compass[i]);
-    //        if (dot_prod > max) {
-    //            max = dot_prod;
-    //            best_match = i;
-    //        }
-    //    }
-    //    return (AABBDirection)best_match;
-    //}
-
     struct AABBCollision {
         BoxCollider *collider;
         AABBDirection direction;
@@ -180,12 +157,12 @@ namespace CalculateFunctions {
         };
 
         Vec2_D Distance;
-        Distance.x = a->GetCenterPos().x - b->GetCenterPos().x;
-        Distance.y = a->GetCenterPos().y - b->GetCenterPos().y;
+        Distance.x = (double)a->GetCenterPos().x - b->GetCenterPos().x;
+        Distance.y = (double)a->GetCenterPos().y - b->GetCenterPos().y;
 
         Vec2_D MinDistance;
-        MinDistance.x = a->GetScaleValue().x + b->GetScaleValue().x;
-        MinDistance.y = a->GetScaleValue().y + b->GetScaleValue().y;
+        MinDistance.x = (double)a->GetScaleValue().x + b->GetScaleValue().x;
+        MinDistance.y = (double)a->GetScaleValue().y + b->GetScaleValue().y;
 
         if (abs(Distance.x) >= MinDistance.x || abs(Distance.y) >= MinDistance.y) {
             return Vec2(0, 0);
@@ -368,10 +345,7 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
     b = setMinMax(B);
 
     CLogger::Debug("AABB COLLISION");
-    std::cout << a.max.x << " " << a.min.x << std::endl;
-    std::cout << a.max.y << " " << a.min.y << std::endl;
-    std::cout << b.max.x << " " << b.min.x << std::endl;
-    std::cout << b.max.y << " " << b.min.y << std::endl;
+    CLogger::Debug("%f %f\n%f %f\n%f %f\n%f %f", a.max.x, a.min.x, a.max.y, a.min.y, b.max.x, b.min.x, b.max.y, b.min.y);
 
     if (a.max.x < b.min.x || a.min.x > b.max.x) return false;
     if (a.max.y < b.min.y || a.min.y > b.max.y) return false;
