@@ -12,14 +12,40 @@ public:
     double GetGravity() { return this->gravity; }
     bool GetIsStrict() { return this->strict; }
 
-    void SetVelocity(Vec2 v) { this->velocity = v; }
-    void SetVelocity(double x, double y) { this->velocity = Vec2(x, y); }
-    void AddVelocity(Vec2 v) { this->velocity += v; }
+    RigidBody2D* SetVelocity(Vec2 v) { 
+        this->velocity = v;
+        return this;
+    }
 
-    void SetMass(double m) { this->mass = m; }
-    void SetRestitution(double r) { this->restitution = r; }
-    void SetGravity(double g) { this->gravity = g; }
-    void SetIsStrict(bool s) { this->strict = s; }
+    RigidBody2D* SetVelocity(double x, double y) {
+        this->velocity = Vec2(x, y);
+        return this;
+    }
+
+    RigidBody2D* AddVelocity(Vec2 v) { 
+        this->velocity += v;
+        return this;
+    }
+
+    RigidBody2D* SetMass(double m) {
+        this->mass = m;
+        return this;
+    }
+
+    RigidBody2D* SetRestitution(double r) { 
+        this->restitution = r;
+        return this;
+    }
+
+    RigidBody2D* SetGravity(double g) { 
+        this->gravity = g;
+        return this;
+    }
+
+    RigidBody2D* SetIsStrict(bool s) { 
+        this->strict = s;
+        return this;
+    }
 
 private:
     Vec2 velocity = Vec2(0.0, 0.0);

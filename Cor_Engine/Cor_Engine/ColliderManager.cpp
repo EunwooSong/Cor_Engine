@@ -384,7 +384,7 @@ void ColliderManager::LateUpdate() {
 
         if (valA == nullptr || valB == nullptr) {
             CLogger::Info("[ColliderMananger] Collider is NULL! - Skipping");
-            continue;
+            return;
         }
 
         bool isCollided;
@@ -399,7 +399,7 @@ void ColliderManager::LateUpdate() {
         CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
 
         if (isCollided) {
-            if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
+            if (valA->GetIsTrigger() == false && !valB->GetIsTrigger() == false) {
                 //evalCollision(valA, valB)
 
                 if (!valA->GetIsCollided()) {
@@ -447,7 +447,7 @@ void ColliderManager::LateUpdate() {
             valB->SetIsCollided(true);
         }
         else {
-            if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
+            if (valA->GetIsTrigger() == false && !valB->GetIsTrigger() == false) {
                 if (valA->GetIsCollided()) {
                     valA->OnCollisionExit(valB);
                 }

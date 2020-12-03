@@ -16,7 +16,7 @@ void RigidBodyTestScene::Init() {
 	GameObject* rect1 = new GameObject();
 	auto rect2 = new GameObject();
 
-	rect1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
+	rect1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Character/ball.png");
 	rect2->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
 	rect2->transform->SetLocalPos(0, 200);
 	//rect1->transform->SetRotation(0.1);
