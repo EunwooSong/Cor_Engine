@@ -27,7 +27,7 @@ void UnitMovement::Update()
 		float checkX = current.x + stopRange;
 
 		for (auto tmp : teamMgr->team1_unit) {
-			if (tmp == GetOwner()) continue;
+			if (tmp == GetOwner()) break;
 
 			Transform* tmpTr = tmp->transform;
 			Vec2 tmpP = tmpTr->GetWorldPos();

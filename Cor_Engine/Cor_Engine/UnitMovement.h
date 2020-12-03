@@ -12,7 +12,7 @@ class UnitMovement :
 {
 public:
     UnitMovement() : moveSpeed(100.0f), attackRange(200.0f), attackPower(10.0f),
-        attackDelay(0.5f), stopRange(100.0f), hp(100.0f), attackTimer(0.0f),
+        attackDelay(0.5f), stopRange(64.0f), hp(100.0f), attackTimer(0.0f),
         isHit(false), isMove(true), isAttack(false),
         _anim(nullptr), teamMgr(nullptr), tr(nullptr), renderer(nullptr), rigid(nullptr),
         team(Team::NONE), type(UnitType::NONE)
