@@ -8,6 +8,8 @@
 #include "ComponentManager.h"
 #include "ColliderManager.h"
 
+class GameObject;
+
 class Scene {
 public:
     Scene();
@@ -78,7 +80,7 @@ public:
     }
 
     std::vector<Component*> FindEntityComponents(EntityID _id);
-
+    GameObject* FindGameObject(std::string name);
     std::map<EntityID, Entity*> m_EntityList;
 
 private:

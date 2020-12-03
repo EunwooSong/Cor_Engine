@@ -13,7 +13,9 @@ public:
     virtual void Init() = 0;
 
     void SetTag(std::string tag) { this->tag = tag; }
-    std::string GetTagI() { return tag; }
+    void SetName(std::string name) { this->name = name; }
+    std::string GetName() { return name; }
+    std::string GetTag() { return tag; }
     bool GetIsDestroy() { return isDestroy; }
     bool GetIsActive() { return isActive; };
     void SetIsActive(bool isActive);
@@ -27,6 +29,7 @@ protected:
     void SetIsDestroy(bool isDestroy) { this->isDestroy = isDestroy; }
 
     EntityID m_id;
+    std::string name;
     std::string tag;
     Scene* m_Scene;
     std::vector<Component*> m_components;

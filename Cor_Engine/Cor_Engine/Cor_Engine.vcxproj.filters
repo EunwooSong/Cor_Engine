@@ -49,6 +49,9 @@
     <Filter Include="소스 파일\ZeroEngine\CLogger">
       <UniqueIdentifier>{e08f0688-473f-4300-b7b9-bbff007c26dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\InGame\Prefabs">
+      <UniqueIdentifier>{e144a611-12e2-4372-9b08-79b45c51153c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXCore.h">
@@ -132,12 +135,6 @@
     <ClInclude Include="GameScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CharMovement.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CharManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -145,6 +142,24 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="RigidBodyTestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>소스 파일\InGame</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitBaseObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitMovement.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXSoundManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -215,12 +230,6 @@
     <ClCompile Include="ColliderManager.cpp">
       <Filter>소스 파일\ZeroEngine\Managers\CoreComponentManager</Filter>
     </ClCompile>
-    <ClCompile Include="CharMovement.cpp">
-      <Filter>소스 파일\InGame\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="CharManager.cpp">
-      <Filter>소스 파일\InGame\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>소스 파일\InGame\Scene</Filter>
     </ClCompile>
@@ -235,6 +244,21 @@
     </ClCompile>
     <ClCompile Include="RigidBodyTestScene.cpp">
       <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamManager.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitMovement.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitBaseObject.cpp">
+      <Filter>소스 파일\InGame\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXSoundManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

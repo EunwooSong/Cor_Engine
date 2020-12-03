@@ -6,6 +6,7 @@
 #include "TimeManager.h"
 #include "InputManager.h"
 #include "DirectXTextureManager.h"
+#include "DirectXSoundManager.h"
 
 
 #define ZERO_ENGINE        ZeroSystem::Instance()
@@ -16,6 +17,7 @@
 #define ZERO_SCENE_MGR     ZERO_ENGINE->GetSceneManager()
 #define ZERO_INPUT_MGR     ZERO_ENGINE->GetInputManager()
 #define ZERO_TEXTURE_MGR   ZERO_ENGINE->GetTextureManager()
+#define ZERO_SOUND_MGR     ZERO_ENGINE->GetSoundManager()
 
 class ZeroSystem {
 public:
@@ -46,7 +48,8 @@ public:
     SceneManager* GetSceneManager()                 { return sceneMgr; }
     TimeManager* GetTimeManager()                   { return timeMgr; }
     InputManager* GetInputManager()                 { return inputMgr; }
-    DirectXTextureManager* GetTextureManager()       { return textureMgr; }
+    DirectXTextureManager* GetTextureManager()      { return textureMgr; }
+    DirectXSoundManager* GetSoundManager()          { return soundMgr; }
     bool GetIsDebug();
 
 public:
@@ -54,6 +57,7 @@ public:
     TimeManager* timeMgr;
     InputManager* inputMgr;
     DirectXTextureManager* textureMgr;
+    DirectXSoundManager* soundMgr;
 
 private:
     bool isDebug;
