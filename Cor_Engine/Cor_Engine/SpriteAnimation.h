@@ -2,12 +2,13 @@
 
 class SpriteAnimation {
 public:
-    SpriteAnimation() : fps(0),
+    SpriteAnimation() : fps(0.0f),
         textureCount(0),
         isLoop(true),
         isLoopEnd(true),
         isEnd(true),
-        currentFrame(0)
+        currentFrame(0),
+        timeCheck(0)
     {};
     ~SpriteAnimation() {};
 
@@ -19,19 +20,19 @@ public:
     void ResetTexture();
     void RestartAnimation();
 
-    int GetFps() { return fps; }
+    float GetFps() { return fps; }
     int GetTextureCount() { return textureCount; }
     bool GetIsAnimationLoop() { return isLoop; }
     bool GetIsAnimationEnd() { return isLoopEnd || isEnd; }
     float GetCurrentFrame() { return currentFrame; }
     LPDIRECT3DTEXTURE9* GetCurrentFrameTexture() { return textures[(int)currentFrame]; }
 
-    void SetFps(int fps) { this->fps = fps; }
+    void SetFps(float fps) { this->fps = fps; }
     void SetIsLoop(bool isLoop) { this->isLoop = isLoop; }
 
 private:
     std::vector<LPDIRECT3DTEXTURE9*> textures;
-    int fps;
+    float fps;
     int textureCount;
     bool isLoop;
     bool isLoopEnd;

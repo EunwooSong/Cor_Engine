@@ -10,8 +10,9 @@ public:
     Entity();
     ~Entity() {}
 
-    virtual void Init() = 0;
+    virtual void Init() {};
 
+    void SetEntityID(EntityID id) { if(m_id == -1) this->m_id = id; }
     void SetTag(std::string tag) { this->tag = tag; }
     void SetName(std::string name) { this->name = name; }
     std::string GetName() { return name; }

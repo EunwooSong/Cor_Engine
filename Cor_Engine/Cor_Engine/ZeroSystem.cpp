@@ -44,18 +44,15 @@ void ZeroSystem::InitializeEngine()
 
 void ZeroSystem::Start()
 {
+	timeMgr->Update();
+	inputMgr->Update();
+
 	sceneMgr->Start();
 }
 
 bool ZeroSystem::Update()
 {
-	if (ZERO_WINDOWS->CheckMessage().message == WM_QUIT)
-		return false;
-
-	timeMgr->Update();
-	inputMgr->Update();
 	sceneMgr->Update();
-
 	return true;
 }
 

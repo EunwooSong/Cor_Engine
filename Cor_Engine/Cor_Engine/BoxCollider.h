@@ -15,11 +15,18 @@ public:
 
     Vec2 GetScaleValue();
 
+    double GetLeftPos();
+    double GetRightPos();
+    double GetTopPos();
+    double GetBottomPos();
+
     double GetRotation() const { return this->rotation; }
 
     bool GetIsCollided() const { return this->isCollided; }
 
     bool GetIsTrigger() const { return this->isTrigger; }
+
+    bool GetIsPreviousLoopCollisionResolved() const { return this->isPreviousLoopCollisionResolved; }
 
     void SetRelativePos(Vec2 lt, Vec2 rb, double rot = 0);
 
@@ -35,6 +42,8 @@ public:
 
     void SetIsTrigger(bool b) { this->isTrigger = b; }
 
+    void SetIsPreviousLoopCollisionResolved(bool b) { this->isPreviousLoopCollisionResolved = b; }
+
     void Start() override;
     void Update() override;
 
@@ -44,4 +53,5 @@ private:
     double rotation = 0.0;
     bool isCollided = false;
     bool isTrigger = false;
+    bool isPreviousLoopCollisionResolved = false;
 };

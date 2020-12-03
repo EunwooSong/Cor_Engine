@@ -27,6 +27,8 @@ public:
     EntityID CreateEntity(Entity* iter) {
         EntityID tmp = m_EntityIDManager->CreateEntityID();
         m_EntityList.insert(std::pair<EntityID, Entity*>(tmp, iter));
+        iter->SetEntityID(tmp);
+        iter->Init();
         return tmp;
     }
 

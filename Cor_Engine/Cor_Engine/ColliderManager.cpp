@@ -4,7 +4,10 @@
 #include "GameObject.h"
 #include "RigidBody2D.h"
 #include "ZeroSystem.h"
+#include "Transform.h"
 #include <cstdlib>
+
+constexpr double correctionMultiplyValue = 1.0;
 
 void ColliderManager::MountCollider(BoxCollider* colA,
     BoxCollider* colB) {
@@ -16,7 +19,7 @@ void ColliderManager::MountCollider(BoxCollider* colA,
     colliderSet.insert(colB);
     for (auto iter : this->colliderQueue) {
         if (iter == colliderSet) {
-            CLogger::Debug("[ColliderManager] Collide case already exists!");
+            //CLogger::Debug("[ColliderManager] Collide case already exists!");
             return;
         }
     }
@@ -49,13 +52,13 @@ namespace CalculateFunctions {
     double getLength(Vec2 a) {
         return (double)sqrt(pow(a.x, 2) + pow(a.y, 2));
     }
-   
+
     Vec2 normalizeVector(Vec2 a) {
         auto len = getLength(a);
         Vec2 ret(a.x / len, a.y / len);
         return ret;
     }
-         
+
     Vec2 getHeightVector(BoxCollider* a) {
         Vec2 ret;
         ret.x = (double)a->GetScaleValue().y * 2 * cos(deg_to_rad(a->GetRotation() - 90)) / 2;
@@ -123,7 +126,7 @@ namespace CalculateFunctions {
         xymm.max.x = collider->GetRightBottomPos().x;
         xymm.max.y = collider->GetRightBottomPos().y;
 
-        std::cout << xymm.max.y << std::endl;
+        //std::cout << xymm.max.y << std::endl;
 
         return xymm;
     }
@@ -141,37 +144,38 @@ namespace CalculateFunctions {
         }
     }
 
-    AABBDirection getVectorDirection(Vec2 a) {
-        using namespace CalculateFunctions;
-        Vec2 compass[] = {
-            Vec2(0.0f, 1.0f),	// up
-            Vec2(1.0f, 0.0f),	// right
-            Vec2(0.0f, -1.0f),	// down
-            Vec2(-1.0f, 0.0f)	// left
-        };
-
-        double max = 0.0;
-
-        unsigned short best_match = -1;
-        for (unsigned short i = 0; i < 4; i++) {
-            auto norm = normalizeVector(a);
-            double dot_prod = dotProduct(norm, compass[i]);
-            if (dot_prod > max) {
-                max = dot_prod;
-                best_match = i;
-            }
-        }
-        return (AABBDirection)best_match;
-    }
-
     struct AABBCollision {
-        BoxCollider *collider;
+        BoxCollider* collider;
         AABBDirection direction;
         AABBCollision(BoxCollider* c, AABBDirection d) {
             this->collider = c;
             this->direction = d;
         }
     };
+
+    Vec2 getIntersectionDepth(BoxCollider* a, BoxCollider* b) {
+        struct Vec2_D {
+            double x;
+            double y;
+        };
+        Vec2_D Distance;
+        Distance.x = (double)a->GetCenterPos().x - b->GetCenterPos().x;
+        Distance.y = (double)a->GetCenterPos().y - b->GetCenterPos().y;
+
+        Vec2_D MinDistance;
+        MinDistance.x = (double)a->GetScaleValue().x + b->GetScaleValue().x;
+        MinDistance.y = (double)a->GetScaleValue().y + b->GetScaleValue().y;
+
+        if (abs(Distance.x) >= MinDistance.x || abs(Distance.y) >= MinDistance.y) {
+            return Vec2(0, 0);
+        }
+
+        Vec2_D Depth;
+        Depth.x = Distance.x > 0 ? MinDistance.x - Distance.x : -MinDistance.x - Distance.x;
+        Depth.y = Distance.y > 0 ? MinDistance.y - Distance.y : -MinDistance.y - Distance.y;
+
+        return Vec2(Depth.x, Depth.y);
+    }
 }
 
 void evalCollision(BoxCollider* _A, BoxCollider* _B) {
@@ -213,15 +217,68 @@ void evalCollision(BoxCollider* _A, BoxCollider* _B) {
 void ResolveAABB(CalculateFunctions::AABBCollision* A, CalculateFunctions::AABBCollision* B) {
     using namespace CalculateFunctions;
 
+    if (A->collider->GetIsPreviousLoopCollisionResolved() || B->collider->GetIsPreviousLoopCollisionResolved()) {
+        A->collider->SetIsPreviousLoopCollisionResolved(false);
+        B->collider->SetIsPreviousLoopCollisionResolved(false);
+
+        //CLogger::Debug("Previous collision resolved");
+
+        return;
+    }
+    else {
+        A->collider->SetIsPreviousLoopCollisionResolved(true);
+        B->collider->SetIsPreviousLoopCollisionResolved(true);
+    }
+
     RigidBody2D* Arg = A->collider->GetOwner()->GetComponent<RigidBody2D>();
     RigidBody2D* Brg = B->collider->GetOwner()->GetComponent<RigidBody2D>();
+
 
     switch (A->direction) {
     case AABBDirection::UP:
     case AABBDirection::DOWN:
     {
-        double newAVelocity = Brg->GetVelocity().y * Brg->GetMass() * Brg->GetRestitution();
-        double newBVelocity = Arg->GetVelocity().y * Arg->GetMass() * Arg->GetRestitution();
+        if (Arg->GetIsStrict() && Brg->GetIsStrict()) {
+            return;
+        }
+        else if (Arg->GetIsStrict()) {
+            auto bowner = Brg->GetOwner();
+
+            double correctionPos =
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Brg->GetVelocity().y * correctionMultiplyValue;
+
+            bowner->transform->SetLocalPos(bowner->transform->GetLocalPos().x,
+                bowner->transform->GetLocalPos().y + correctionPos);
+
+            double newBVelocity = Brg->GetVelocity().y * -1.0 * Brg->GetMass() * Arg->GetRestitution();
+            Brg->SetVelocity(Vec2(Brg->GetVelocity().x, newBVelocity));
+
+
+            return;
+        }
+        else if (Brg->GetIsStrict()) {
+            auto aowner = Arg->GetOwner();
+
+            double correctionPos =
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Arg->GetVelocity().y * correctionMultiplyValue;
+
+            aowner->transform->SetLocalPos(aowner->transform->GetLocalPos().x,
+                aowner->transform->GetLocalPos().y + correctionPos);
+
+            double newAVelocity = Arg->GetVelocity().y * -1.0 * Arg->GetMass() * Brg->GetRestitution();
+            Arg->SetVelocity(Vec2(Arg->GetVelocity().x, newAVelocity));
+
+            return;
+        }
+        double newAVelocity = Brg->GetVelocity().y * Brg->GetMass() * Arg->GetRestitution();
+        double newBVelocity = Arg->GetVelocity().y * Arg->GetMass() * Brg->GetRestitution();
+
+        //CLogger::Debug("AVel : %f BVel : %f", newAVelocity, newBVelocity);
+        //CLogger::Debug("AMass : %f, BMass : %f, ALegVel : %f, BLegVel : %f, Ares : %f, Bres : %f",
+        //    Arg->GetMass(), Brg->GetMass(), Arg->GetVelocity().y, Brg->GetVelocity().y,
+        //    Arg->GetRestitution(), Brg->GetRestitution());
+
+        //system("pause");
 
         Arg->SetVelocity(Vec2(Arg->GetVelocity().x, newAVelocity));
         Brg->SetVelocity(Vec2(Brg->GetVelocity().x, newBVelocity));
@@ -231,14 +288,85 @@ void ResolveAABB(CalculateFunctions::AABBCollision* A, CalculateFunctions::AABBC
     case AABBDirection::LEFT:
     case AABBDirection::RIGHT:
     {
-        double newAVelocity = Brg->GetVelocity().x * Brg->GetMass() * Brg->GetRestitution();
-        double newBVelocity = Arg->GetVelocity().x * Arg->GetMass() * Arg->GetRestitution();
+        if (Arg->GetIsStrict() && Brg->GetIsStrict()) {
+            return;
+        }
+        else if (Arg->GetIsStrict()) {
+            auto bowner = Brg->GetOwner();
+            double correctionPos =
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Brg->GetVelocity().x * correctionMultiplyValue;
+
+            bowner->transform->SetLocalPos(bowner->transform->GetLocalPos().x + correctionPos,
+                bowner->transform->GetLocalPos().y);
+
+            double newBVelocity = Brg->GetVelocity().x * -1.0 * Brg->GetMass() * Arg->GetRestitution();
+            Brg->SetVelocity(Vec2(newBVelocity, Brg->GetVelocity().y));
+
+            return;
+        }
+        else if (Brg->GetIsStrict()) {
+            auto aowner = Arg->GetOwner();
+            double correctionPos =
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Arg->GetVelocity().x * correctionMultiplyValue;
+
+            aowner->transform->SetLocalPos(aowner->transform->GetLocalPos().x + correctionPos,
+                aowner->transform->GetLocalPos().y);
+
+            double newAVelocity = Arg->GetVelocity().x * -1.0 * Arg->GetMass() * Brg->GetRestitution();
+            Arg->SetVelocity(Vec2(newAVelocity, Arg->GetVelocity().y));
+
+
+            return;
+        }
+
+        double newAVelocity = Brg->GetVelocity().x * Brg->GetMass() * Arg->GetRestitution();
+        double newBVelocity = Arg->GetVelocity().x * Arg->GetMass() * Brg->GetRestitution();
 
         Arg->SetVelocity(Vec2(newAVelocity, Arg->GetVelocity().y));
         Brg->SetVelocity(Vec2(newBVelocity, Brg->GetVelocity().y));
 
         return;
     }
+    }
+}
+
+void ResolveAABB(BoxCollider* A, BoxCollider* B) {
+    using namespace CalculateFunctions;
+    auto intersection = getIntersectionDepth(A, B);
+
+    if (intersection.x == 0 || intersection.y == 0) {
+        return;
+    }
+
+    AABBDirection dirA;
+
+
+    if (abs(intersection.x) < abs(intersection.y)) {
+        // Collision on X asis
+        if (sin(intersection.x) < 0) {
+            // Collision on right
+            dirA = AABBDirection::RIGHT;
+        }
+        else {
+            // Collision on left
+            dirA = AABBDirection::LEFT;
+        }
+    }
+    else if (abs(intersection.x) > abs(intersection.y)) {
+        // Collision on Y axis
+        if (sin(intersection.y) < 0) {
+            //Collision on bottom
+            dirA = AABBDirection::DOWN;
+        }
+        else {
+            //Collision on top
+            dirA = AABBDirection::UP;
+        }
+    }
+
+    AABBCollision ACol(A, dirA), BCol(B, getInverseVectorDirection(dirA));
+
+    ResolveAABB(&ACol, &BCol);
 }
 
 bool EvalAABB(BoxCollider* A, BoxCollider* B) {
@@ -249,27 +377,17 @@ bool EvalAABB(BoxCollider* A, BoxCollider* B) {
     a = setMinMax(A);
     b = setMinMax(B);
 
-    CLogger::Debug("AABB COLLISION");
-    std::cout << a.max.x << " " << a.min.x << std::endl;
-    std::cout << a.max.y << " " << a.min.y << std::endl;
-    std::cout << b.max.x << " " << b.min.x << std::endl;
-    std::cout << b.max.y << " " << b.min.y << std::endl;
+    //CLogger::Debug("AABB COLLISION");
+    //CLogger::Debug("%f %f\n%f %f\n%f %f\n%f %f", a.max.x, a.min.x, a.max.y, a.min.y, b.max.x, b.min.x, b.max.y, b.min.y);
 
     if (a.max.x < b.min.x || a.min.x > b.max.x) return false;
     if (a.max.y < b.min.y || a.min.y > b.max.y) return false;
-
-    auto direction = getVectorDirection(A->GetCenterPos() - B->GetCenterPos());
-    AABBCollision aC(A, direction);
-    AABBCollision bC(B, getInverseVectorDirection(direction));
-
-    ResolveAABB(&aC, &bC);
 
     return true;
 }
 
 bool EvalOBB(BoxCollider* A, BoxCollider* B) {
-    CLogger::Debug("OBB COLLISION");
-
+    //CLogger::Debug("OBB COLLISION");
     using namespace CalculateFunctions;
     Vec2 dist = getDistanceVector(A, B);
     Vec2 vec[4] = {
@@ -297,8 +415,8 @@ void ColliderManager::LateUpdate() {
         BoxCollider* valB = *++iter.begin();
 
         if (valA == nullptr || valB == nullptr) {
-            CLogger::Info("[ColliderMananger] Collider is NULL! - Skipping");
-            continue;
+            //CLogger::Info("[ColliderMananger] Collider is NULL! - Skipping");
+            return;
         }
 
         bool isCollided;
@@ -310,15 +428,21 @@ void ColliderManager::LateUpdate() {
             isCollided = EvalOBB(valA, valB);
         }
 
-        CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
+        //CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
 
         if (isCollided) {
             if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
-                //evalCollision(valA, valB)
+
                 if (!valA->GetIsCollided()) {
+                    using namespace CalculateFunctions;
+
+                    ResolveAABB(valA, valB);
+
+
                     valA->OnCollisionEnter(valB);
                 }
                 else {
+
                     valA->OnCollisionStay(valB);
                 }
 
@@ -326,8 +450,7 @@ void ColliderManager::LateUpdate() {
                     valB->OnCollisionEnter(valA);
                 }
                 else {
-                    valB->OnCollisionStay(valA);
-
+                    valA->OnCollisionStay(valB);
                 }
             }
             else {

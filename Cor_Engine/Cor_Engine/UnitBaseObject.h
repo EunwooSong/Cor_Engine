@@ -5,7 +5,7 @@ class UnitBaseObject :
     public GameObject
 {
 public:
-    UnitBaseObject() = default;
+    UnitBaseObject() : GameObject() { Init(); };
     ~UnitBaseObject() = default;
 
     void Init() override;

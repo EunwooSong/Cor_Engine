@@ -7,8 +7,8 @@ enum class Team {
 
 enum class UnitType {
 	NONE = -1,
-	BOW,
 	SWORD,
+	BOW,
 	SHIELD,
 	SLAVE,
 	MONKS,

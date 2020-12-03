@@ -7,12 +7,13 @@
 #include "Sprite2DRenderer.h"
 #include "RigidBody2D.h"
 #include "BoxCollider.h"
+#include "CLogger.h"
 
 void UnitBaseObject::Init()
 {
 	AddComponent<UnitMovement>();
 	AddComponent<Sprite2DRenderer>();
 	AddComponent<AnimationController>();
-	AddComponent<RigidBody2D>();
+	AddComponent<RigidBody2D>()->setIsStrict(true);
 	AddComponent<BoxCollider>();
 }

@@ -9,14 +9,6 @@
 void UnitMovement::Start()
 {
 	Component::Start();
-
-	_anim		= GetOwner()->GetComponent<AnimationController>();
-	renderer	= GetOwner()->GetComponent<Sprite2DRenderer>();
-	tr			= GetOwner()->GetComponent<Transform>();
-	rigid		= GetOwner()->GetComponent<RigidBody2D>();
-
-	if (team == Team::TEAM_2)
-		tr->SetScale(-tr->GetScale().x, tr->GetScale().y);
 }
 
 void UnitMovement::Update()
@@ -34,16 +26,18 @@ void UnitMovement::Update()
 	if (team == Team::TEAM_1) {
 		float checkX = current.x + stopRange;
 
-		if (myIter - 1 != teamMgr->team1_unit.begin()) {
-			Transform* tmpTr = (*(myIter - 1))->transform;
+		for (auto tmp : teamMgr->team1_unit) {
+			if (tmp == GetOwner()) continue;
+
+			Transform* tmpTr = tmp->transform;
 			Vec2 tmpP = tmpTr->GetWorldPos();
-			
+
 			if (checkX > tmpP.x)
 				isMove = false;
 			else
 				isMove = true;
 
-			if ((*(myIter - 1))->GetComponent<UnitMovement>()->GetType() == UnitType::MONKS)
+			if (tmp->GetComponent<UnitMovement>()->GetType() == UnitType::MONKS)
 				if (!isMove)
 					isMove = true;
 		}
@@ -60,7 +54,7 @@ void UnitMovement::Update()
 			}
 		}
 	}
-	else {
+	else if(team == Team::TEAM_2){
 		float checkX = current.x - stopRange;
 
 		if (myIter - 1 != teamMgr->team2_unit.begin()) {
@@ -90,14 +84,16 @@ void UnitMovement::Update()
 	}
 
 	if (isMove)
-		rigid->AddVelocity(moveDir * moveSpeed * ZERO_TIME_MGR->GetDeltaTime());
-
+		tr->Translate(moveDir * moveSpeed * ZERO_TIME_MGR->GetDeltaTime());
+	/*else
+		CLogger::Error("WTF?");*/
 	if (isAttack) {
 		attackTimer += ZERO_TIME_MGR->GetDeltaTime();
 
 		if (attackTimer > attackDelay) {
 			Attack();
 			CLogger::Debug("Attack! %d", GetOwner()->GetEntityID());
+			attackTimer = 0.0f;
 		}
 	}
 }
@@ -111,4 +107,63 @@ void UnitMovement::InitType(Team team, UnitType type)
 {
 	this->team = team;
 	this->type = type;
+
+	_anim = GetOwner()->GetComponent<AnimationController>();
+	renderer = GetOwner()->GetComponent<Sprite2DRenderer>();
+	tr = GetOwner()->GetComponent<Transform>();
+	rigid = GetOwner()->GetComponent<RigidBody2D>();
+
+	if (team == Team::TEAM_2)
+		tr->SetScale(-tr->GetScale().x, tr->GetScale().y);
+
+	teamMgr = GetOwner()->GetScene()->FindGameObject("TeamMgr")->GetComponent<TeamManager>();
+
+
+	SpriteAnimation* anim_move = new SpriteAnimation();
+	SpriteAnimation* anim_attack = new SpriteAnimation();
+
+	//Animationµî·Ï
+	switch (type)
+	{
+	case UnitType::NONE:
+		break;
+
+	case UnitType::SWORD:
+		anim_move->SetFps(2);
+		anim_move->AddTextures("Resources/Character/Ä®º´/Walk", 2);
+
+		anim_attack->SetFps(2);
+		anim_attack->AddTextures("Resources/Character/Ä®º´/Attack", 2);
+
+		renderer->SetTexture("Resources/Character/Ä®º´/Walk/1.png");
+		break;
+
+	case UnitType::BOW:
+		anim_move->SetFps(2);
+		anim_move->AddTextures("Resources/Character/È°º´/Walk", 2);
+
+		anim_attack->SetFps(3);
+		anim_attack->AddTextures("Resources/Character/È°º´/Attack", 3);
+
+		renderer->SetTexture("Resources/Character/È°º´/Walk/1.png");
+		break;
+	case UnitType::SHIELD:
+		break;
+	case UnitType::SLAVE:
+		break;
+	case UnitType::MONKS:
+		break;
+	case UnitType::BUTCHRE:
+		break;
+	case UnitType::CLOWN:
+		break;
+	case UnitType::GISAENG:
+		break;
+	default:
+		break;
+	}
+
+	_anim->AddAnimationNode("Move", anim_move);
+	_anim->AddAnimationNode("Attack", anim_attack);
+	_anim->SetEntryAnimationNode("Move");
 }

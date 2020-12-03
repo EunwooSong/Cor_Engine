@@ -2,9 +2,11 @@
 #include "AnimationController.h"
 #include "GameObject.h"
 #include "Sprite2DRenderer.h"
+#include "CLogger.h"
 
 AnimationController::AnimationController()
 {
+	entry_node = anim_node.begin();
 }
 
 AnimationController::~AnimationController()
@@ -24,6 +26,7 @@ void AnimationController::Start()
 {
 	Component::Start();
 	current_node = entry_node;
+	current_node->second->currentAnim->RestartAnimation();
 }
 
 void AnimationController::Update()
@@ -66,7 +69,7 @@ void AnimationController::CheckAnimationState()
 						break;
 					}
 				}
-				if (!skipThisNode) continue;
+				if (skipThisNode) continue;
 
 				//Check state type float
 				for (StateNode<float> state_float : group->stateType_float) {
@@ -75,7 +78,7 @@ void AnimationController::CheckAnimationState()
 						break;
 					}
 				}
-				if (!skipThisNode) continue;
+				if (skipThisNode) continue;
 
 				//Check state type bool
 				for (StateNode<float> state_bool : group->stateType_float) {
@@ -84,10 +87,10 @@ void AnimationController::CheckAnimationState()
 						break;
 					}
 				}
-				if (!skipThisNode) continue;
+				if (skipThisNode) continue;
 
 				//Change current node
-				ChangeAnimationNode(iter.first);
+				ChangeAnimationNode(nextAnim);
 				break;
 			}
 		}

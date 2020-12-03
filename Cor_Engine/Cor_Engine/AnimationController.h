@@ -59,6 +59,13 @@ public:
     AnimationController();
     ~AnimationController();
 
+    //Animation 생성 순서
+    //1. SpriteAnimation을 생성한다
+    //2. Parameter을 설정한다.
+    //3. AnimationNode를 추가한다.
+    //4. AddState를 통해 state를 등록한다.
+    //5. SetEntryAniamtionNode을 통해 시작 Animation을 설정한다
+
     void Start() override;
     void Update() override;
     void LateUpdate() override;
