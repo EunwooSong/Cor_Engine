@@ -27,9 +27,17 @@ struct G_Walls {
 		this->right->AddComponent<BoxCollider>()->SetIsTrigger(true);
 		this->top->AddComponent<BoxCollider>();
 		this->bottom->AddComponent<BoxCollider>();
-		
-		this->top->AddComponent<RigidBody2D>();
-		this->bottom->AddComponent<RigidBody2D>();
+
+		this->top->AddComponent<RigidBody2D>()->SetIsStrict(true);
+		this->bottom->AddComponent<RigidBody2D>()->SetIsStrict(true);
+
+		this->top->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-x.png");
+		this->bottom->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-x.png");
+
+		this->top->transform->SetLocalPos(0, 0);
+		this->bottom->transform->SetLocalPos(0, (double)720 - 10);
+		this->left->transform->SetLocalPos(0, 10);
+		this->right->transform->SetLocalPos(1270, 10);
 	}
 };
 
@@ -44,6 +52,8 @@ struct G_Obj {
 		this->collider = this->object->AddComponent<BoxCollider>();
 		this->rigidBody = this->object->AddComponent<RigidBody2D>();
 		this->renderer = this->object->AddComponent<Sprite2DRenderer>();
+
+
 	}
 };
 
@@ -58,7 +68,7 @@ void PingPongScene::Init()
 	
 	G_Obj* opponent = new G_Obj(0);
 	opponent->object->transform->SetLocalPos(10.0, 10.0);
-	opponent->object->transform->SetScale(1280 - 10, 100);
+	opponent->object->transform->SetScale((double)1280 - 10, 100);
 	opponent->renderer->SetTexture("Resources/Character/player.png");
 
 	G_Obj* ball = new G_Obj(0);
