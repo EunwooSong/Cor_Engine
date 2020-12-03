@@ -4,14 +4,16 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "ZeroSystem.h"
+#include "CLogger.h"
 
 void UnitMovement::Start()
 {
 	Component::Start();
 
-	_anim = GetOwner()->GetComponent<AnimationController>();
-	renderer = GetOwner()->GetComponent<Sprite2DRenderer>();
-	tr = GetOwner()->GetComponent<Transform>();
+	_anim		= GetOwner()->GetComponent<AnimationController>();
+	renderer	= GetOwner()->GetComponent<Sprite2DRenderer>();
+	tr			= GetOwner()->GetComponent<Transform>();
+	rigid		= GetOwner()->GetComponent<RigidBody2D>();
 
 	if (team == Team::TEAM_2)
 		tr->SetScale(-tr->GetScale().x, tr->GetScale().y);
@@ -79,7 +81,6 @@ void UnitMovement::Update()
 			if (checkX > tmp->transform->GetWorldPos().x && current.x < tmp->transform->GetWorldPos().x) {
 				isMove = false;
 				isAttack = true;
-				attackDelay = 0.0f;
 				break;
 			}
 			else {
@@ -89,11 +90,21 @@ void UnitMovement::Update()
 	}
 
 	if (isMove)
-		tr->Translate(moveDir * moveSpeed * ZERO_TIME_MGR->GetDeltaTime());
+		rigid->AddVelocity(moveDir * moveSpeed * ZERO_TIME_MGR->GetDeltaTime());
 
 	if (isAttack) {
-		
+		attackTimer += ZERO_TIME_MGR->GetDeltaTime();
+
+		if (attackTimer > attackDelay) {
+			Attack();
+			CLogger::Debug("Attack! %d", GetOwner()->GetEntityID());
+		}
 	}
+}
+
+void UnitMovement::Attack()
+{
+	//타입에 따라 생성하는 Object다름
 }
 
 void UnitMovement::InitType(Team team, UnitType type)

@@ -5,13 +5,15 @@
 #include "TeamManager.h"
 #include "Transform.h"
 #include "Sprite2DRenderer.h"
+#include "RigidBody2D.h"
 
 class UnitMovement :
     public Component
 {
 public:
     UnitMovement() : moveSpeed(300.0f), attackRange(200.0f), attackPower(10.0f),
-        attackDelay(0.5f), stopRange(100.0f), hp(100.0f), isHit(false), isMove(true), isAttack(false),
+        attackDelay(0.5f), stopRange(100.0f), hp(100.0f), attackTimer(0.0f),
+        isHit(false), isMove(true), isAttack(false),
         _anim(nullptr), teamMgr(nullptr), tr(nullptr), renderer(nullptr),
         team(Team::NONE), type(UnitType::NONE)
     {};
@@ -20,6 +22,7 @@ public:
     void Start()  override;
     void Update() override;
 
+    void Attack();
     void InitType(Team team, UnitType type);
     Team GetTeam() { return team; }
     UnitType GetType() { return type; }
@@ -35,6 +38,7 @@ private:
     float attackRange;
     float attackPower;
     float attackDelay;
+    float attackTimer;
 
     //State
     float hp;
@@ -47,6 +51,7 @@ private:
     TeamManager* teamMgr;
     Sprite2DRenderer* renderer;
     Transform* tr;
+    RigidBody2D* rigid;
 
     Team team;
     UnitType type;
