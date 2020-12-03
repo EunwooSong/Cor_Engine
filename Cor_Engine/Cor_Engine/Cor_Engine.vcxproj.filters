@@ -156,6 +156,12 @@
     <ClInclude Include="UnitMovement.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXSoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -247,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="UnitBaseObject.cpp">
       <Filter>소스 파일\InGame\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXSoundManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
