@@ -3,6 +3,7 @@
 
 class PingPongScene : public Scene
 {
+public:
 	PingPongScene();
 	~PingPongScene();
 

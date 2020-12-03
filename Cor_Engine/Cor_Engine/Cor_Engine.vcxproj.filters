@@ -162,6 +162,9 @@
     <ClInclude Include="DirectXSoundManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PingPongScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -259,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="DirectXSoundManager.cpp">
       <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PingPongScene.cpp">
+      <Filter>소스 파일\InGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

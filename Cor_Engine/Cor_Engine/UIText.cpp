@@ -48,4 +48,6 @@ UIText* UIText::SetFont(std::string fontName)
 		fontName.c_str(),
 		&font
 	);
+
+	return this;
 }

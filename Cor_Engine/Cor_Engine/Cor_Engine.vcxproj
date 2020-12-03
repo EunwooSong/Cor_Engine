@@ -160,6 +160,7 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="DirectXSoundManager.h" />
+    <ClInclude Include="PingPongScene.h" />
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UnitMovement.h" />
     <ClInclude Include="CLogger.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="DirectXSoundManager.cpp" />
+    <ClCompile Include="PingPongScene.cpp" />
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UnitMovement.cpp" />
     <ClCompile Include="CLogger.cpp" />

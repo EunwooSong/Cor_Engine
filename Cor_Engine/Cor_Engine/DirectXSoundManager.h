@@ -7,6 +7,9 @@
 class DirectXSoundManager
 {
 public:
+	DirectXSoundManager();
+	~DirectXSoundManager();
+
 	bool Initialize(HWND hWnd);
 	void Shutdown();
 
