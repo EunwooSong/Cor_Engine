@@ -160,6 +160,9 @@
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="DirectXSoundManager.h" />
+    <ClInclude Include="PingPongBall.h" />
+    <ClInclude Include="PingPongOpponent.h" />
+    <ClInclude Include="PingPongPlayer.h" />
     <ClInclude Include="PingPongScene.h" />
     <ClInclude Include="UIText.h" />
     <ClInclude Include="UnitMovement.h" />
@@ -199,6 +202,9 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="DirectXSoundManager.cpp" />
+    <ClCompile Include="PingPongBall.cpp" />
+    <ClCompile Include="PingPongOpponent.cpp" />
+    <ClCompile Include="PingPongPlayer.cpp" />
     <ClCompile Include="PingPongScene.cpp" />
     <ClCompile Include="UIText.cpp" />
     <ClCompile Include="UnitMovement.cpp" />

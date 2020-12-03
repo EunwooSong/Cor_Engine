@@ -16,7 +16,7 @@ void RigidBodyTestScene::Init() {
 	GameObject* rect1 = new GameObject();
 	auto rect2 = new GameObject();
 
-	rect1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Character/ball.png");
+	rect1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
 	rect2->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/Map.png");
 	rect2->transform->SetLocalPos(0, 200);
 	//rect1->transform->SetRotation(0.1);
@@ -37,10 +37,10 @@ void RigidBodyTestScene::Init() {
 	//rect2Collider->SetAbsolutePos(Vec2(100, 100), Vec2(1, 1), 0);
 	auto rect1Rg = rect1->AddComponent<RigidBody2D>();
 	rect1Rg->SetGravity(0);
-	rect1Rg->SetVelocity(10, 20);
+	rect1Rg->SetVelocity(10, 100);
 	auto rect2Rg = rect2->AddComponent<RigidBody2D>();
 	rect2Rg->SetGravity(0);
-	rect2Rg->SetIsStrict(true);
+	rect2Rg->SetIsStrict(false);
 	rect2Rg->SetRestitution(1);
 	//rect2Rg->setIsStrict(true);
 }

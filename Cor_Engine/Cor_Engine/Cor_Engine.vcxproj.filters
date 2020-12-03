@@ -165,6 +165,15 @@
     <ClInclude Include="PingPongScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PingPongPlayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PingPongBall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PingPongOpponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -265,6 +274,15 @@
     </ClCompile>
     <ClCompile Include="PingPongScene.cpp">
       <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PingPongPlayer.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="PingPongBall.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="PingPongOpponent.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

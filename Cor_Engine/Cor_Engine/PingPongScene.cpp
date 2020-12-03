@@ -5,8 +5,10 @@
 #include "RigidBody2D.h"
 #include "BoxCollider.h"
 #include "Transform.h"
+#include "PingPongPlayer.h"
+#include "PingPongOpponent.h"
 
-constexpr double multiplyValue = 1.2;
+constexpr double multiplyValue = 1.01;
 
 PingPongScene::PingPongScene() = default;
 
@@ -30,11 +32,18 @@ struct G_Walls {
 
 		this->top->AddComponent<BoxCollider>();
 		this->bottom->AddComponent<BoxCollider>();
-		//this->left->AddComponent<BoxCollider>();
-		//this->right->AddComponent<BoxCollider>();
+		this->left->AddComponent<BoxCollider>();
+		this->right->AddComponent<BoxCollider>();
 
 		this->top->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-x.png");
-		this->bottom->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-x.png");
+		this->bottom->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-x.png");		
+		this->left->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-y.png");
+		this->right->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/wall-y.png");
+
+		this->top->transform->SetLocalPos(0, 0);
+		this->bottom->transform->SetLocalPos(0, (double)720 - 10);
+		this->left->transform->SetLocalPos(0, 10);
+		this->right->transform->SetLocalPos(1270, 10);
 	}
 };
 
@@ -56,28 +65,33 @@ void PingPongScene::Init()
 {
 	Scene::Init();
 
-	G_Obj* player = new G_Obj(0);
-	player->object->transform->SetLocalPos(10.0, 10.0);
-	//player->object->transform->SetScale(10, 100);
-	player->renderer->SetTexture("Resources/Character/player.png");
-	
-	G_Obj* opponent = new G_Obj(0);
-	opponent->object->transform->SetLocalPos(10.0, 10.0);
-	//opponent->object->transform->SetScale((double)1280 - 10, 100);
-	opponent->renderer->SetTexture("Resources/Character/player.png");
+	Scene::RegisterComponent<PingPongPlayer>();
+	Scene::RegisterComponent<PingPongOpponent>();
+
 
 	G_Obj* ball = new G_Obj(0);
-	ball->rigidBody->SetVelocity(-40.0, 40.0);
-	ball->rigidBody->SetRestitution(0);
+	ball->rigidBody->SetVelocity(-80.0 * 2, -60.0 * 2);
+	//ball->rigidBody->SetRestitution(0);
 	ball->object->transform->SetLocalPos(1280 / 2, 720 / 2);
-	ball->object->transform->SetScale(20, 20);
 	ball->renderer->SetTexture("Resources/Character/ball.png");
 
+
+	G_Obj* player = new G_Obj(0);
+	player->object->transform->SetLocalPos(10.0, 15.0);
+	player->rigidBody->SetRestitution(multiplyValue);
+	player->renderer->SetTexture("Resources/Character/player.png");
+	player->rigidBody->SetIsStrict(true);
+	player->object->AddComponent<PingPongPlayer>();
+
+	
+	G_Obj* opponent = new G_Obj(0);
+	opponent->object->transform->SetLocalPos(1260.0, 15.0);
+	opponent->rigidBody->SetRestitution(multiplyValue);
+	opponent->renderer->SetTexture("Resources/Character/player.png");
+	opponent->rigidBody->SetIsStrict(true);
+	opponent->object->AddComponent<PingPongOpponent>()->SetValue(ball->object);
+
 	G_Walls* walls = new G_Walls();
-
-	walls->top->transform->SetLocalPos(0, 0);
-	walls->bottom->transform->SetLocalPos(0, (double)720 - 10);
-	walls->left->transform->SetLocalPos(0, 10);
-	walls->right->transform->SetLocalPos(1270, 10);
-
 }
+
+//void PingPongScene::

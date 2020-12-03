@@ -4,7 +4,10 @@
 #include "GameObject.h"
 #include "RigidBody2D.h"
 #include "ZeroSystem.h"
+#include "Transform.h"
 #include <cstdlib>
+
+constexpr double correctionMultiplyValue = 3.0;
 
 void ColliderManager::MountCollider(BoxCollider* colA,
     BoxCollider* colB) {
@@ -240,12 +243,29 @@ void ResolveAABB(CalculateFunctions::AABBCollision* A, CalculateFunctions::AABBC
             return;
         }
         else if (Arg->GetIsStrict()) {
+            auto bowner = Brg->GetOwner();
+
+            double correctionPos =
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Brg->GetVelocity().y * correctionMultiplyValue;
+
+            bowner->transform->SetLocalPos(bowner->transform->GetLocalPos().x,
+                bowner->transform->GetLocalPos().y + correctionPos);
+
             double newBVelocity = Brg->GetVelocity().y * -1.0 * Brg->GetMass() * Arg->GetRestitution();
             Brg->SetVelocity(Vec2(Brg->GetVelocity().x, newBVelocity));
+
 
             return;
         }
         else if (Brg->GetIsStrict()) {
+            auto aowner = Arg->GetOwner();
+
+            double correctionPos = 
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Arg->GetVelocity().y * correctionMultiplyValue;
+
+            aowner->transform->SetLocalPos(aowner->transform->GetLocalPos().x, 
+                aowner->transform->GetLocalPos().y + correctionPos);
+
             double newAVelocity = Arg->GetVelocity().y * -1.0 * Arg->GetMass() * Brg->GetRestitution();
             Arg->SetVelocity(Vec2(Arg->GetVelocity().x, newAVelocity));
 
@@ -274,14 +294,29 @@ void ResolveAABB(CalculateFunctions::AABBCollision* A, CalculateFunctions::AABBC
             return;
         }
         else if (Arg->GetIsStrict()) {
+            auto bowner = Brg->GetOwner();
+            double correctionPos = 
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Brg->GetVelocity().x * correctionMultiplyValue;
+
+            bowner->transform->SetLocalPos(bowner->transform->GetLocalPos().x + correctionPos, 
+                bowner->transform->GetLocalPos().y);
+
             double newBVelocity = Brg->GetVelocity().x * -1.0 * Brg->GetMass() * Arg->GetRestitution();
             Brg->SetVelocity(Vec2(newBVelocity, Brg->GetVelocity().y));
 
             return;
         }
         else if (Brg->GetIsStrict()) {
+            auto aowner = Arg->GetOwner();
+            double correctionPos = 
+                (double)ZERO_TIME_MGR->GetDeltaTime() * -Arg->GetVelocity().x * correctionMultiplyValue;
+
+            aowner->transform->SetLocalPos(aowner->transform->GetLocalPos().x + correctionPos,
+                aowner->transform->GetLocalPos().y);
+
             double newAVelocity = Arg->GetVelocity().x * -1.0 * Arg->GetMass() * Brg->GetRestitution();
             Arg->SetVelocity(Vec2(newAVelocity, Arg->GetVelocity().y));
+
 
             return;
         }
@@ -399,17 +434,10 @@ void ColliderManager::LateUpdate() {
         CLogger::Debug("[ColliderManager] Collider started : status : %s", isCollided ? "true" : "false");
 
         if (isCollided) {
-            if (valA->GetIsTrigger() == false && !valB->GetIsTrigger() == false) {
-                //evalCollision(valA, valB)
+            if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
 
                 if (!valA->GetIsCollided()) {
                     using namespace CalculateFunctions;
-
-                    /*auto direction = getVectorDirection(valA->GetCenterPos() - valB->GetCenterPos());
-                    AABBCollision aC(valA, direction);
-                    AABBCollision bC(valB, getInverseVectorDirection(direction));*/
-
-                    //ResolveAABB(&aC, &bC);
 
                     ResolveAABB(valA, valB);
 
@@ -447,7 +475,7 @@ void ColliderManager::LateUpdate() {
             valB->SetIsCollided(true);
         }
         else {
-            if (valA->GetIsTrigger() == false && !valB->GetIsTrigger() == false) {
+            if (!valA->GetIsTrigger() && !valB->GetIsTrigger()) {
                 if (valA->GetIsCollided()) {
                     valA->OnCollisionExit(valB);
                 }
