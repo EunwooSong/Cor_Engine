@@ -365,6 +365,9 @@ void ResolveAABB(BoxCollider* A, BoxCollider* B) {
             dirA = AABBDirection::UP;
         }
     }
+    else {
+        return;
+    }
 
     AABBCollision ACol(A, dirA), BCol(B, getInverseVectorDirection(dirA));
 
