@@ -23,6 +23,9 @@ LPDIRECT3DTEXTURE9* DirectXTextureManager::LoadTextureFormFile(const char* path)
             NULL,
             *(&textureMap[path])
         );
+
+        if (textureMap[path] == nullptr)
+            CLogger::Error("Load Texture Error : %s", path);
     }
 
     return textureMap[path];

@@ -23,6 +23,10 @@ void Transform::LateUpdate() {
 }
 void Transform::EndScene() {
     Component::EndScene();
+
+    if(parent)
+        if (parent->GetOwner()->GetIsDestroy())
+            GameObject::Destroy(GetOwner());
 }
 void Transform::AddChild(Transform* iter) {
     iter->SetParent(this);

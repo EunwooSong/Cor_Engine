@@ -1,7 +1,6 @@
 #pragma once
 #include "ECS_Type.h"
 
-class Collision;
 class GameObject;
 class Entity;
 class BoxCollider;

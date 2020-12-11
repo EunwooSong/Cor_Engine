@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "GameObject.h"
 class Button :
     public Component
 {
@@ -14,7 +15,9 @@ public:
         defScale(1.0f, 1.0f),
         upSpeed(5.0f),
         onClick([=] {})
-    {}
+    {
+        SetOnClick([&]() { GameObject::Destroy(this->GetOwner()); });
+    }
     ~Button();
 
     void Start() override;
@@ -55,4 +58,3 @@ private:
 
     std::function<void()> onClick;
 };
-

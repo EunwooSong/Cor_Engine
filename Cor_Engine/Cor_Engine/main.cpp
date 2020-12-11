@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ZeroSystem.h"
 #include "GameScene.h"
-#include "TestScene.h"
+#include "MainScene.h"
 #include "RigidBodyTestScene.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -15,8 +15,9 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 	ZERO_ENGINE->RegisterEngine("ZeroEngine", 1280, 720, isFullScreen);
 
 	ZERO_ENGINE->InitializeEngine();
-	ZERO_SCENE_MGR->ChangeScene(new GameScene());
-	
+	ZERO_SCENE_MGR->ChangeScene(new MainScene());
+	ZERO_SOUND_MGR->LoadWaveFile("Resources/bgm_good.wav", "BGM");
+	ZERO_SOUND_MGR->PlayWaveFile("BGM");
 	
 	return ZERO_ENGINE->MainLoop();
 }

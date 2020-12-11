@@ -25,6 +25,7 @@ public:
 
     Vec2 GetTextureSize() { return Vec2(width, height); }
     D3DXCOLOR GetColor() { return color; }
+    void SetVisibleRect(Rect rect) { visibleRect = rect; }
     Rect GetVisibleRect() { return visibleRect; }
 
     void SetColor(D3DXCOLOR color) { this->color = color; }

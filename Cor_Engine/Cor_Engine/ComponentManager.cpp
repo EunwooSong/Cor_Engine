@@ -23,8 +23,9 @@ void ComponentManager::Update() {
 
         for (auto compoIter : componentArray) {
             if (compoIter)
-                if(compoIter->GetIsStarted())
-                    compoIter->Update();
+                if (compoIter->GetIsStarted())
+                    if (compoIter->GetActive())
+                        compoIter->Update();
         }
     }
 }
@@ -50,7 +51,8 @@ void ComponentManager::Render() {
         for (auto compoIter : componentArray) {
             if (compoIter)
                 if (compoIter->GetIsStarted())
-                    compoIter->Render();
+                    if (compoIter->GetActive())
+                        compoIter->Render();
         }
     }
 }
@@ -63,7 +65,8 @@ void ComponentManager::EndScene() {
         for (auto compoIter : componentArray) {
             if (compoIter)
                 if (compoIter->GetIsStarted())
-                    compoIter->EndScene();
+                    if (compoIter->GetActive())
+                        compoIter->EndScene();
         }
     }
 }

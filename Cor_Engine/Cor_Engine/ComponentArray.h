@@ -45,6 +45,7 @@ public:
         SAFE_DELETE(
             m_ComponentArray[indexOfRemovedEntity]);
         m_ComponentArray[indexOfRemovedEntity] = m_ComponentArray[indexOfLastElement];
+        m_ComponentArray.erase(m_ComponentArray.begin() + indexOfLastElement);
 
         EntityID entityOfLastElement = m_IndexToEntityMap[indexOfLastElement];
         m_EntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;

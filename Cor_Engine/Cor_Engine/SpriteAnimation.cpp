@@ -34,7 +34,7 @@ void SpriteAnimation::ResetTexture() {
     textureCount = 0;
 }
 void SpriteAnimation::RestartAnimation() {
-    currentFrame = 0;
+    currentFrame = 0.0f;
     isEnd = false;
     isLoopEnd = false;
 }

@@ -8,6 +8,12 @@
 #include "UnitBaseObject.h"
 #include "RigidBody2D.h"
 #include "BoxCollider.h"
+#include "RectCollider.h"
+#include "BulletMovement.h"
+#include "UserPickUIManager.h"
+#include "UIImageRenderer.h"
+#include "UIHp.h"
+#include "UIText.h"
 
 GameScene::GameScene() {
 }
@@ -20,6 +26,12 @@ void GameScene::Init() {
 
 	RegisterComponent<TeamManager>();
 	RegisterComponent<UnitMovement>();
+	RegisterComponent<RectCollider>();
+	RegisterComponent<BulletMovement>();
+	RegisterComponent<UserPickUIManager>();
+	RegisterComponent<UIImageRenderer>();
+	RegisterComponent<UIHp>();
+	RegisterComponent<UIText>();
 
 	GameObject* bg = new GameObject();
 	bg->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/Stage/stage_1.png");
@@ -28,19 +40,28 @@ void GameScene::Init() {
 	GameObject* base_1 = new GameObject();
 	base_1->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/UI/기지/기지1.png");
 	base_1->transform->SetLocalPos(Vec2(0, 560));
+	base_1->AddComponent<RectCollider>()->SetRect(base_1->GetComponent<Sprite2DRenderer>()->GetVisibleRect());
 
 	//생성위치2
 	GameObject* base_2 = new GameObject();
 	base_2->AddComponent<Sprite2DRenderer>()->SetTexture("Resources/UI/기지/기지1.png");
 	base_2->transform->SetLocalPos(Vec2(1280, 560));
 	base_2->transform->SetScale(Vec2(-1.0f, 1.0f));
+	base_2->AddComponent<RectCollider>()->SetRect(base_2->GetComponent<Sprite2DRenderer>()->GetVisibleRect());
 
 	//팀 메니저 등록
 	GameObject* teamManager = new GameObject();
 	teamManager->SetName("TeamMgr");
 	TeamManager* teamMGR = teamManager->AddComponent<TeamManager>();
+	teamMGR->SetUnitIndex(arr[0], arr[1]);
 	teamMGR->teamBase1 = base_1;
 	teamMGR->teamBase2 = base_2;
+
+	//팀 메니저 생성할 UI 넣고 UIManager생성
+	GameObject* uiManager = new GameObject();
+	auto mgr = uiManager->AddComponent<UserPickUIManager>();
+	mgr->teamMGR = teamMGR;
+	mgr->Init(teamMGR->indexArr1, teamMGR->indexArr2);
 
 	//테스트 Unit추가
 	/*GameObject* testUnit = new GameObject();

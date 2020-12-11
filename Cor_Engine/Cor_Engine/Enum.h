@@ -16,3 +16,10 @@ enum class UnitType {
 	CLOWN,
 	GISAENG
 };
+
+enum class BulletType {
+	KNIFE,
+	ARROW,
+	HEAL,
+	BUFF
+};

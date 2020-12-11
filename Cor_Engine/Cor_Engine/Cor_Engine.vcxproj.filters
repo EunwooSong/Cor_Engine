@@ -156,6 +156,42 @@
     <ClInclude Include="UnitMovement.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="RectCollider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXSoundManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMovement.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UserPickUIManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UIImageRenderer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PickScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PickSceneManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXCore.cpp">
@@ -247,6 +283,42 @@
     </ClCompile>
     <ClCompile Include="UnitBaseObject.cpp">
       <Filter>소스 파일\InGame\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="RectCollider.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>소스 파일\ZeroEngine\CoreComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXSoundManager.cpp">
+      <Filter>소스 파일\ZeroEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>소스 파일\InGame\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMovement.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="UserPickUIManager.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UIImageRenderer.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHp.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PickScene.cpp">
+      <Filter>소스 파일\InGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PickSceneManager.cpp">
+      <Filter>소스 파일\InGame\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

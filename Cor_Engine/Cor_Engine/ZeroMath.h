@@ -21,6 +21,13 @@ public:
         bottom = b;
     }
 
+    Rect(Vec2 rb) {
+        left = 0;
+        right = rb.x;
+        top = 0;
+        bottom = rb.y;
+    }
+
     Rect(int l, int t, int r, int b) {
         left = l;
         right = r;
@@ -94,4 +101,9 @@ inline float Random(float form, float to) {
 inline float Angle(Vec2 p1, Vec2 p2) {
     Vec2 p = p2 - p1;
     return atan2(p.y, p.x);
+}
+
+inline float Length(Vec2 p1, Vec2 p2) {
+    Vec2 p = p2 - p1;
+    return sqrtf(p.y * p.y + p.x * p.x);
 }

@@ -37,9 +37,11 @@ void ZeroSystem::InitializeEngine()
 	timeMgr = new TimeManager();
 	textureMgr = new DirectXTextureManager();
 	inputMgr = new InputManager();
+	soundMgr = new DirectXSoundManager();
 
 	//Initialize Managers
 	timeMgr->Init();
+	soundMgr->Initialize(ZERO_WINDOWS->GetHWND());
 }
 
 void ZeroSystem::Start()
@@ -86,7 +88,8 @@ void ZeroSystem::Release()
 	SAFE_DELETE(timeMgr);
 	SAFE_DELETE(textureMgr);
 	SAFE_DELETE(inputMgr);
-
+	SAFE_DELETE(soundMgr);
+	
 	ZERO_DIRECT3D->Release();
 	instance.release();
 }

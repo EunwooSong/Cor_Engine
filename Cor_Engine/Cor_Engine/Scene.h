@@ -24,21 +24,9 @@ public:
     void Render();
     void EndScene();
 
-    EntityID CreateEntity(Entity* iter) {
-        EntityID tmp = m_EntityIDManager->CreateEntityID();
-        m_EntityList.insert(std::pair<EntityID, Entity*>(tmp, iter));
-        iter->SetEntityID(tmp);
-        iter->Init();
-        return tmp;
-    }
+    EntityID CreateEntity(Entity* iter);
 
-    void DestroyEntity(EntityID _id) {
-        m_EntityIDManager->DestroyEntityID(_id);
-        m_ComponentManager->EntityDestroyed(_id);
-
-        SAFE_DELETE(m_EntityList[_id]);
-        m_EntityList.erase(_id);
-    }
+    void DestroyEntity(EntityID _id);
 
     template <typename T>
     void RegisterComponent() {

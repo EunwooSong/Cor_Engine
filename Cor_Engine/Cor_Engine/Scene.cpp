@@ -49,15 +49,41 @@ void Scene::EndScene() {
     //Destroy Entity Objects
     m_ComponentManager->EndScene();
 
+    /*m_EntityList.erase(std::remove_if(m_EntityList.begin(), m_EntityList.end(), [&](auto iter) {
+        bool remove = ((Entity*)iter.second)->GetIsDestroy();
+        if (remove) {
+            DestroyEntity((EntityID)(iter.first));
+        }
+
+        return remove;
+        }), m_EntityList.end());*/
+
     for (auto iter = m_EntityList.begin(); iter != m_EntityList.end(); ++iter) {
         if (iter->second->GetIsDestroy()) {
             auto tmp = iter++;
             DestroyEntity(tmp->first);
-
-            if (iter == m_EntityList.end())
-                break;
+            if (iter != m_EntityList.begin())
+                iter--;
         }
     }
+}
+
+EntityID Scene::CreateEntity(Entity* iter)
+{
+    EntityID tmp = m_EntityIDManager->CreateEntityID();
+    m_EntityList.insert(std::pair<EntityID, Entity*>(tmp, iter));
+    iter->SetEntityID(tmp);
+    iter->Init();
+    return tmp;
+}
+
+void Scene::DestroyEntity(EntityID _id)
+{
+    m_EntityIDManager->DestroyEntityID(_id);
+    m_ComponentManager->EntityDestroyed(_id);
+
+    SAFE_DELETE(m_EntityList[_id]);
+    m_EntityList.erase(_id);
 }
 
 std::vector<Component*> Scene::FindEntityComponents(EntityID _id) {

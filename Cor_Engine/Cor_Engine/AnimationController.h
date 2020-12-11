@@ -116,27 +116,35 @@ private:
 template<typename T>
 inline void AnimationController::AddParameter(std::string paramKey)
 {
-    switch (typeid(T).name)
-    {
-    case "int"      : param_int.insert(std::pair<std::string, int>(paramKey, (int)0));                  break;
-    case "float"    : param_float.insert(std::pair<std::string, float>(paramKey, (float).0f));          break;
-    case "bool"     : param_bool.insert(std::pair<std::string, bool>(paramKey, (bool)false));           break;
-    case "trigger"  : param_trigger.insert(std::pair<std::string, trigger>(paramKey, (trigger)false )); break;
-    default: std::cout << "[ ERROR ] Animation Parameter Type Error " << std::endl;                     break;
-    }
+    const char* tmpName = typeid(T).name();
+
+    if(strcmp("int", tmpName) == 0)
+        param_int.insert(std::pair<std::string, int>(paramKey, (int)0));
+    else if(strcmp("float", tmpName) == 0)
+        param_float.insert(std::pair<std::string, float>(paramKey, (float).0f));
+    else if(strcmp("bool", tmpName) == 0)
+        param_bool.insert(std::pair<std::string, bool>(paramKey, (bool)false));
+    else if(strcmp("trigger", tmpName) == 0)
+        param_trigger.insert(std::pair<std::string, trigger>(paramKey, (trigger)false));
+    else
+        std::cout << "[ ERROR ] Animation Parameter Type Error " << std::endl;
 }
 
 template<typename T>
 inline void AnimationController::AddParameter(std::string paramKey, T value)
 {
-    switch (typeid(T).name)
-    {
-    case "int"      : param_int.insert(std::pair<std::string, int>(paramKey, (int)value));              break;
-    case "float"    : param_float.insert(std::pair<std::string, float>(paramKey, (float)value));        break;
-    case "bool"     : param_bool.insert(std::pair<std::string, bool>(paramKey, (bool)value));           break;
-    case "trigger"  : param_trigger.insert(std::pair<std::string, trigger>(paramKey, (trigger)value));  break;
-    default: std::cout << "[ ERROR ] Animation Parameter Type Error " << std::endl;                     break;
-    }
+    const char* tmpName = typeid(T).name();
+
+    if (strcmp("int", tmpName) == 0)
+        param_int.insert(std::pair<std::string, int>(paramKey, (int)value));
+    else if (strcmp("float", tmpName) == 0)
+        param_float.insert(std::pair<std::string, float>(paramKey, (float)value));
+    else if (strcmp("bool", tmpName) == 0)
+        param_bool.insert(std::pair<std::string, bool>(paramKey, (bool)value));
+    else if (strcmp("trigger", tmpName) == 0)
+        param_trigger.insert(std::pair<std::string, trigger>(paramKey, (trigger)value));
+    else
+        std::cout << "[ ERROR ] Animation Parameter Type Error " << std::endl;
 }
 
 template<typename T>
@@ -147,28 +155,35 @@ inline void AnimationController::AddState(std::string targetAnim, std::string pa
         std::cout << "[ ERROR ] Nonexistent Animation identifier " << std::endl;
         return;
     }
-    
-    if (strcmp(typeid(T).name(), "trigger")) {
-        std::cout << "[ ERROR ] The type passed is the trigger. Automatically adding to stateType_trigger..." << std::endl;
-        AddTrigger(paramName, targetAnim);
-        return;
-    }
 
     AnimationNode* iter = anim_node[targetAnim];
     
-    StateNode<T> state;
-    state.paramName = paramName;
-    state.operater = oper;
-    state.targetValue = value;
+    const char* tmpName = typeid(T).name();
 
     if (iter->stateGroup.find(nextAnim) == iter->stateGroup.end())
         SetHasExitTime(targetAnim, nextAnim, true);
 
-    switch (typeid(T).name())
-    {
-    case "int":     iter->stateGroup[nextAnim]->stateType_int.push_back(state);   break;
-    case "float":   iter->stateGroup[nextAnim]->stateType_float.push_back(state); break;
-    case "bool":    iter->stateGroup[nextAnim]->stateType_bool.push_back(state);  break;
-    default:        std::cout << "[ ERROR ] Animation State Type Error" << std::endl;  break;
+    if (strcmp("int", tmpName) == 0) {
+        StateNode<int> state;
+        state.paramName = paramName;
+        state.operater = oper;
+        state.targetValue = value;
+        iter->stateGroup[nextAnim]->stateType_int.push_back(state);
     }
+    else if (strcmp("float", tmpName) == 0) {
+        StateNode<float> state;
+        state.paramName = paramName;
+        state.operater = oper;
+        state.targetValue = value;
+        iter->stateGroup[nextAnim]->stateType_float.push_back(state);
+    }
+    else if (strcmp("bool", tmpName) == 0) {
+        StateNode<bool> state;
+        state.paramName = paramName;
+        state.operater = oper;
+        state.targetValue = value;
+        iter->stateGroup[nextAnim]->stateType_bool.push_back(state);
+    }
+    else
+        std::cout << "[ ERROR ] Animation State Type Error" << std::endl;
 }

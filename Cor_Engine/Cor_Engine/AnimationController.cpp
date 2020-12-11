@@ -81,8 +81,8 @@ void AnimationController::CheckAnimationState()
 				if (skipThisNode) continue;
 
 				//Check state type bool
-				for (StateNode<float> state_bool : group->stateType_float) {
-					if (!state_bool.CheckOperater(GetParameterFloat(state_bool.paramName))) {
+				for (StateNode<bool> state_bool : group->stateType_bool) {
+					if (!state_bool.CheckOperater(GetParameterBool(state_bool.paramName))) {
 						skipThisNode = true;
 						break;
 					}
